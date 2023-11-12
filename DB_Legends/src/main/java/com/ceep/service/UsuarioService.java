@@ -4,10 +4,45 @@
  */
 package com.ceep.service;
 
+import com.ceep.data.IUsuarioDAO;
+import com.ceep.dominio.Usuario;
+import java.util.List;
+import javax.ejb.Stateless;
+import javax.inject.Inject;
+
 /**
  *
  * @author joseb
  */
-public class UsuarioService {
+@Stateless
+public class UsuarioService implements IUsuarioService{
+
+    @Inject
+    private IUsuarioDAO usuariodao;
+    
+    @Override
+    public List<Usuario> listarUsuario() {
+        return usuariodao.findAllUsuario();
+    }
+
+    @Override
+    public Usuario encontrarUsuarioId(Usuario usuario) {
+        return usuariodao.findUsuarioId(usuario);
+    }
+
+    @Override
+    public void insertarUsuario(Usuario usuario) {
+        usuariodao.insertarUsuario(usuario);
+    }
+
+    @Override
+    public void actualizarUsuario(Usuario usuario) {
+        usuariodao.actualizarUsuario(usuario);
+    }
+
+    @Override
+    public void borrarUsuario(Usuario usuario) {
+        usuariodao.borrarUsuario(usuario);
+    }
     
 }
