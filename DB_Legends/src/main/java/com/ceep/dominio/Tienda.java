@@ -13,6 +13,9 @@ import javax.persistence.*;
  * @author joseb
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name="Tienda.fineAll", query="SELECT p FROM tienda p ORDER BY p.id_tienda")
+})
 @Table(name="tienda")
 public class Tienda {
     @Id

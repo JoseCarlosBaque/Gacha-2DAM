@@ -13,6 +13,9 @@ import javax.persistence.*;
  * @author joseb
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name="Destreza.fineAll", query="SELECT p FROM destreza p ORDER BY p.id_destreza")
+})
 @Table(name="destreza")
 public class Destreza implements Serializable {
     @Id

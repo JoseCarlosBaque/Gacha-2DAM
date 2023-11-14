@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
@@ -16,6 +18,9 @@ import javax.persistence.Table;
  * @author joseb
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name="Banner.fineAll", query="SELECT p FROM banner p ORDER BY p.id_banner")
+})
 @Table(name="banner")
 public class Banner {
     @Id

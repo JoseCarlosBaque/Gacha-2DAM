@@ -14,6 +14,9 @@ import javax.persistence.*;
  * @author joseb
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name="Progreso.fineAll", query="SELECT p FROM progreso p ORDER BY p.id_progreso")
+})
 @Table(name="progreso")
 public class Progreso implements Serializable {
     @Id
