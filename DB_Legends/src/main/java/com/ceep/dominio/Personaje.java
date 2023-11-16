@@ -4,6 +4,7 @@
  */
 package com.ceep.dominio;
 
+import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,7 +23,7 @@ import javax.persistence.Table;
     @NamedQuery(name="Personaje.fineAll", query="SELECT p FROM personaje p ORDER BY p.id_personaje")
 })
 @Table(name="personaje")
-public class Personaje {
+public class personaje implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_personaje;
@@ -40,14 +41,14 @@ public class Personaje {
     private int estrellas;
     private boolean conseguido;
 
-    public Personaje() {
+    public personaje() {
     }
 
-    public Personaje(int id_personaje) {
+    public personaje(int id_personaje) {
         this.id_personaje = id_personaje;
     }
 
-    public Personaje(int id_personaje, String nombre, String titulo, String tipo, int salud, int nivel, int daño_fisico, int daño_energia, int defensa_fisica, int defensa_enegia, int critico, int soul, int estrellas, boolean conseguido) {
+    public personaje(int id_personaje, String nombre, String titulo, String tipo, int salud, int nivel, int daño_fisico, int daño_energia, int defensa_fisica, int defensa_enegia, int critico, int soul, int estrellas, boolean conseguido) {
         this.id_personaje = id_personaje;
         this.nombre = nombre;
         this.titulo = titulo;
@@ -207,7 +208,7 @@ public class Personaje {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Personaje other = (Personaje) obj;
+        final personaje other = (personaje) obj;
         if (this.id_personaje != other.id_personaje) {
             return false;
         }

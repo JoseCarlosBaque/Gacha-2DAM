@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package com.ceep.data;
+package com.ceep.service;
 
 import com.ceep.dominio.evento;
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author joseb
  */
-public interface IEventoDAO {
+public interface IEventoService {
     public List<evento> findAllEvento();
     
     public evento findEventoId(evento evento);

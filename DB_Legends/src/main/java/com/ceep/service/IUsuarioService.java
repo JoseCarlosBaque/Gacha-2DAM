@@ -4,7 +4,7 @@
  */
 package com.ceep.service;
 
-import com.ceep.dominio.Usuario;
+import com.ceep.dominio.usuario;
 import java.util.List;
 
 /**
@@ -12,13 +12,13 @@ import java.util.List;
  * @author joseb
  */
 public interface IUsuarioService {
-    public List<Usuario> listarUsuario();
+    public List<usuario> listarUsuario();
     
-    public Usuario encontrarUsuarioId(Usuario usuario);
+    public usuario encontrarUsuarioId(usuario usuario);
     
-    public void insertarUsuario(Usuario usuario);
+    public void insertarUsuario(usuario usuario);
     
-    public void actualizarUsuario (Usuario usuario);
+    public void actualizarUsuario (usuario usuario);
     
-    public void borrarUsuario(Usuario usuario);
+    public void borrarUsuario(usuario usuario);
 }

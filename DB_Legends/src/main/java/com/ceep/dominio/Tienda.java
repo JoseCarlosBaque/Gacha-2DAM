@@ -4,6 +4,7 @@
  */
 package com.ceep.dominio;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 import javax.persistence.*;
@@ -17,17 +18,17 @@ import javax.persistence.*;
     @NamedQuery(name="Tienda.fineAll", query="SELECT p FROM tienda p ORDER BY p.id_tienda")
 })
 @Table(name="tienda")
-public class Tienda {
+public class tienda implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_tienda;
     private String nombre;
-    private ArrayList<Item> items = new ArrayList<Item>();
+    private ArrayList<item> items = new ArrayList<item>();
 
-    public Tienda() {
+    public tienda() {
     }
 
-    public Tienda(int id_tienda, String nombre) {
+    public tienda(int id_tienda, String nombre) {
         this.id_tienda = id_tienda;
         this.nombre = nombre;
     }
@@ -48,11 +49,11 @@ public class Tienda {
         this.nombre = nombre;
     }
 
-    public ArrayList<Item> getItems() {
+    public ArrayList<item> getItems() {
         return items;
     }
 
-    public void setItems(ArrayList<Item> items) {
+    public void setItems(ArrayList<item> items) {
         this.items = items;
     }
 
@@ -76,7 +77,7 @@ public class Tienda {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Tienda other = (Tienda) obj;
+        final tienda other = (tienda) obj;
         if (this.id_tienda != other.id_tienda) {
             return false;
         }

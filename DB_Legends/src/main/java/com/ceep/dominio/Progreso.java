@@ -18,7 +18,7 @@ import javax.persistence.*;
     @NamedQuery(name="Progreso.fineAll", query="SELECT p FROM progreso p ORDER BY p.id_progreso")
 })
 @Table(name="progreso")
-public class Progreso implements Serializable {
+public class progreso implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_progreso;
@@ -26,14 +26,14 @@ public class Progreso implements Serializable {
     private int experiencia;
     private Date fecha;
 
-    public Progreso() {
+    public progreso() {
     }
 
-    public Progreso(int id_progreso) {
+    public progreso(int id_progreso) {
         this.id_progreso = id_progreso;
     }
 
-    public Progreso(int id_progreso, int id_usuario, int experiencia, Date fecha) {
+    public progreso(int id_progreso, int id_usuario, int experiencia, Date fecha) {
         this.id_progreso = id_progreso;
         this.id_usuario = id_usuario;
         this.experiencia = experiencia;
@@ -93,7 +93,7 @@ public class Progreso implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Progreso other = (Progreso) obj;
+        final progreso other = (progreso) obj;
         if (this.id_progreso != other.id_progreso) {
             return false;
         }

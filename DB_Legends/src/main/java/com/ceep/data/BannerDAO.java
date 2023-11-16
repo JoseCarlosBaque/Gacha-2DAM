@@ -4,7 +4,7 @@
  */
 package com.ceep.data;
 
-import com.ceep.dominio.Banner;
+import com.ceep.dominio.banner;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -21,17 +21,17 @@ public class BannerDAO implements IBannerDAO{
     EntityManager em;
     
     @Override
-    public List<Banner> findAllBanne() {
+    public List<banner> findAllBanne() {
         return em.createNamedQuery("Banner.findAll").getResultList();
     }
 
     @Override
-    public void insertarBanner(Banner banner) {
+    public void insertarBanner(banner banner) {
         em.persist(banner);
     }
 
     @Override
-    public void borrarBanner(Banner banner) {
+    public void borrarBanner(banner banner) {
         em.remove(em.merge(banner));
     }
     

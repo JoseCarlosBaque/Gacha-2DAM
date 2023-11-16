@@ -1,10 +1,11 @@
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.ceep.web;
 
-import com.ceep.dominio.Usuario;
+import com.ceep.dominio.usuario;
 import com.ceep.service.IUsuarioService;
 import java.io.IOException;
 import java.util.List;
@@ -26,9 +27,9 @@ public class UsuarioServlet extends HttpServlet{
     
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Usuario> usuarios = usuarioservice.listarUsuario();
+        List<usuario> usuarios = usuarioservice.listarUsuario();
         System.out.println("Usuarios: " + usuarios);
-        request.setAttribute("personas", usuarios);
+        request.setAttribute("usuarios", usuarios);
         request.getRequestDispatcher("listadoUsuario.jsp").forward(request, response);
     }
 }

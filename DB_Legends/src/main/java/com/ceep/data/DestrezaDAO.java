@@ -4,7 +4,7 @@
  */
 package com.ceep.data;
 
-import com.ceep.dominio.Destreza;
+import com.ceep.dominio.destreza;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -21,7 +21,7 @@ public class DestrezaDAO implements IDestrezaDAO{
     EntityManager em;
     
     @Override
-    public List<Destreza> findAllDestreza() {
+    public List<destreza> findAllDestreza() {
         return em.createNamedQuery("Destreza.findAll").getResultList();
     }
     

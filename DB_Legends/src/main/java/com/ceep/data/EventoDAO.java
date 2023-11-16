@@ -4,7 +4,7 @@
  */
 package com.ceep.data;
 
-import com.ceep.dominio.Evento;
+import com.ceep.dominio.evento;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -21,27 +21,27 @@ public class EventoDAO implements IEventoDAO{
     EntityManager em;
     
     @Override
-    public List<Evento> findAllEvento() {
+    public List<evento> findAllEvento() {
         return em.createNamedQuery("Evento.findAll").getResultList();
     }
 
     @Override
-    public Evento findEventoId(Evento evento) {
-        return em.find(Evento.class, evento.getId_evento());
+    public evento findEventoId(evento evento) {
+        return em.find(evento.class, evento.getId_evento());
     }
 
     @Override
-    public void insertarEvento(Evento evento) {
+    public void insertarEvento(evento evento) {
         em.persist(evento);
     }
 
     @Override
-    public void actualizarEvento(Evento evento) {
+    public void actualizarEvento(evento evento) {
         em.merge(evento);
     }
 
     @Override
-    public void borrarEvento(Evento evento) {
+    public void borrarEvento(evento evento) {
         em.remove(em.merge(evento));
     }
     

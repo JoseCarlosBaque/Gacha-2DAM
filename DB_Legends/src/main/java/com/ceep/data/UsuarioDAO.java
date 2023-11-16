@@ -4,7 +4,7 @@
  */
 package com.ceep.data;
 
-import com.ceep.dominio.Usuario;
+import com.ceep.dominio.usuario;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -21,27 +21,27 @@ public class UsuarioDAO implements IUsuarioDAO {
     EntityManager em;
 
     @Override
-    public List<Usuario> findAllUsuario() {
+    public List<usuario> findAllUsuario() {
         return em.createNamedQuery("Usuario.findAll").getResultList();
     }
 
     @Override
-    public Usuario findUsuarioId(Usuario usuario) {
-        return em.find(Usuario.class, usuario.getId_usuario());
+    public usuario findUsuarioId(usuario usuario) {
+        return em.find(usuario.class, usuario.getId_usuario());
     }
 
     @Override
-    public void insertarUsuario(Usuario usuario) {
+    public void insertarUsuario(usuario usuario) {
         em.persist(usuario);
     }
 
     @Override
-    public void actualizarUsuario(Usuario usuario) {
+    public void actualizarUsuario(usuario usuario) {
         em.merge(usuario);
     }
 
     @Override
-    public void borrarUsuario(Usuario usuario) {
+    public void borrarUsuario(usuario usuario) {
         em.remove(em.merge(usuario));
     }
 

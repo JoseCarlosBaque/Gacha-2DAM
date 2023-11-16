@@ -4,6 +4,7 @@
  */
 package com.ceep.dominio;
 
+import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.*;
 
@@ -16,7 +17,7 @@ import javax.persistence.*;
     @NamedQuery(name="Item.fineAll", query="SELECT p FROM item p ORDER BY p.id_item")
 })
 @Table(name="item")
-public class Item {
+public class item implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_item;
@@ -26,14 +27,14 @@ public class Item {
     private int id_tienda;
     private boolean stock;
 
-    public Item() {
+    public item() {
     }
 
-    public Item(int id_item) {
+    public item(int id_item) {
         this.id_item = id_item;
     }
 
-    public Item(int id_item, String nombre, int cantidad, String tipo, int id_tienda, boolean stock) {
+    public item(int id_item, String nombre, int cantidad, String tipo, int id_tienda, boolean stock) {
         this.id_item = id_item;
         this.nombre = nombre;
         this.cantidad = cantidad;
@@ -113,7 +114,7 @@ public class Item {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Item other = (Item) obj;
+        final item other = (item) obj;
         if (this.id_item != other.id_item) {
             return false;
         }

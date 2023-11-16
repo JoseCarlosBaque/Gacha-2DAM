@@ -4,7 +4,7 @@
  */
 package com.ceep.data;
 
-import com.ceep.dominio.Tienda;
+import com.ceep.dominio.tienda;
 import java.util.List;
 
 /**
@@ -12,6 +12,6 @@ import java.util.List;
  * @author joseb
  */
 public interface ITiendaDAO {
-    public List<Tienda> findAllTienda();
-    public Tienda findTiendaId(Tienda tienda);
+    public List<tienda> findAllTienda();
+    public tienda findTiendaId(tienda tienda);
 }

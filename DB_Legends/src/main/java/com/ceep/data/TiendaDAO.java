@@ -4,7 +4,7 @@
  */
 package com.ceep.data;
 
-import com.ceep.dominio.Tienda;
+import com.ceep.dominio.tienda;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -21,13 +21,13 @@ public class TiendaDAO implements ITiendaDAO {
     EntityManager em;
 
     @Override
-    public List<Tienda> findAllTienda() {
+    public List<tienda> findAllTienda() {
         return em.createNamedQuery("Tienda.findAll").getResultList();
     }
 
     @Override
-    public Tienda findTiendaId(Tienda tienda) {
-        return em.find(Tienda.class, tienda.getId_tienda());
+    public tienda findTiendaId(tienda tienda) {
+        return em.find(tienda.class, tienda.getId_tienda());
     }
 
 }

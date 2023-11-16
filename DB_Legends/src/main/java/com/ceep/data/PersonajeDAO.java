@@ -4,7 +4,7 @@
  */
 package com.ceep.data;
 
-import com.ceep.dominio.Personaje;
+import com.ceep.dominio.personaje;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -21,27 +21,27 @@ public class PersonajeDAO implements IPersonajeDAO{
     EntityManager em;
     
     @Override
-    public List<Personaje> findAllPersonaje() {
+    public List<personaje> findAllPersonaje() {
         return em.createNamedQuery("Personaje.findAll").getResultList();
     }
 
     @Override
-    public Personaje findPersonajeId(Personaje personaje) {
-        return em.find(Personaje.class, personaje.getId_personaje());
+    public personaje findPersonajeId(personaje personaje) {
+        return em.find(personaje.class, personaje.getId_personaje());
     }
 
     @Override
-    public void insertarPersonaje(Personaje personaje) {
+    public void insertarPersonaje(personaje personaje) {
         em.persist(personaje);
     }
 
     @Override
-    public void actualizarPersonaje(Personaje personaje) {
+    public void actualizarPersonaje(personaje personaje) {
      em.merge(personaje);
     }
 
     @Override
-    public void borrarPersonaje(Personaje personaje) {
+    public void borrarPersonaje(personaje personaje) {
         em.remove(em.merge(personaje));
     }
 

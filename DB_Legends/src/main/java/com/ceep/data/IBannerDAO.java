@@ -4,7 +4,7 @@
  */
 package com.ceep.data;
 
-import com.ceep.dominio.Banner;
+import com.ceep.dominio.banner;
 import java.util.List;
 
 /**
@@ -12,9 +12,9 @@ import java.util.List;
  * @author joseb
  */
 public interface IBannerDAO {
-    public List<Banner> findAllBanne();
+    public List<banner> findAllBanne();
     
-    public void insertarBanner(Banner banner);
+    public void insertarBanner(banner banner);
     
-    public void borrarBanner(Banner banner);
+    public void borrarBanner(banner banner);
 }

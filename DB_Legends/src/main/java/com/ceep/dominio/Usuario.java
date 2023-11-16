@@ -17,7 +17,7 @@ import javax.persistence.*;
     @NamedQuery(name="Usuario.fineAll", query="SELECT p FROM usuario p ORDER BY p.id_usuario")
 })
 @Table(name="usuario")
-public class Usuario implements Serializable {
+public class usuario implements Serializable {
     private static final long SerialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,21 +26,21 @@ public class Usuario implements Serializable {
     private String clave;
     private int nivel;
 
-    public Usuario() {
+    public usuario() {
     }
 
-    public Usuario(int id_usuario) {
+    public usuario(int id_usuario) {
         this.id_usuario = id_usuario;
     }
 
-    public Usuario(int id_usuario, String usuario, String clave, int nivel) {
+    public usuario(int id_usuario, String usuario, String clave, int nivel) {
         this.id_usuario = id_usuario;
         this.usuario = usuario;
         this.clave = clave;
         this.nivel = nivel;
     }
 
-    public Usuario(String usuario, String clave, int nivel) {
+    public usuario(String usuario, String clave, int nivel) {
         this.usuario = usuario;
         this.clave = clave;
         this.nivel = nivel;
@@ -99,7 +99,7 @@ public class Usuario implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Usuario other = (Usuario) obj;
+        final usuario other = (usuario) obj;
         if (this.id_usuario != other.id_usuario) {
             return false;
         }

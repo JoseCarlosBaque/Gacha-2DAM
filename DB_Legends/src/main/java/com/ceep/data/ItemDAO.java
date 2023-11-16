@@ -4,7 +4,7 @@
  */
 package com.ceep.data;
 
-import com.ceep.dominio.Item;
+import com.ceep.dominio.item;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -21,27 +21,27 @@ public class ItemDAO implements IItemDAO {
     EntityManager em;
 
     @Override
-    public List<Item> findAllItem() {
+    public List<item> findAllItem() {
         return em.createNamedQuery("Item.findAll").getResultList();
     }
 
     @Override
-    public Item findItemId(Item item) {
-        return em.find(Item.class, item.getId_item());
+    public item findItemId(item item) {
+        return em.find(item.class, item.getId_item());
     }
 
     @Override
-    public void insertarItem(Item item) {
+    public void insertarItem(item item) {
         em.persist(item);
     }
 
     @Override
-    public void actualizarItem(Item item) {
+    public void actualizarItem(item item) {
         em.merge(item);
     }
 
     @Override
-    public void borrarItem(Item item) {
+    public void borrarItem(item item) {
         em.remove(em.merge(item));
     }
 

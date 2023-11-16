@@ -4,6 +4,7 @@
  */
 package com.ceep.dominio;
 
+import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,7 +23,7 @@ import javax.persistence.Table;
     @NamedQuery(name="Banner.fineAll", query="SELECT p FROM banner p ORDER BY p.id_banner")
 })
 @Table(name="banner")
-public class Banner {
+public class banner implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_banner;
@@ -34,14 +35,14 @@ public class Banner {
     private int prob_ex;
     private int prob_hero;
 
-    public Banner() {
+    public banner() {
     }
 
-    public Banner(int id_banner) {
+    public banner(int id_banner) {
         this.id_banner = id_banner;
     }
 
-    public Banner(int id_banner, String nombre, int precio, int step, int prob_nuevo, int prob_sp, int prob_ex, int prob_hero) {
+    public banner(int id_banner, String nombre, int precio, int step, int prob_nuevo, int prob_sp, int prob_ex, int prob_hero) {
         this.id_banner = id_banner;
         this.nombre = nombre;
         this.precio = precio;
@@ -141,7 +142,7 @@ public class Banner {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Banner other = (Banner) obj;
+        final banner other = (banner) obj;
         if (this.id_banner != other.id_banner) {
             return false;
         }

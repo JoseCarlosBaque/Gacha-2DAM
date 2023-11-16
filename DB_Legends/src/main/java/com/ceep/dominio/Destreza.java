@@ -14,10 +14,10 @@ import javax.persistence.*;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name="Destreza.fineAll", query="SELECT p FROM destreza p ORDER BY p.id_destreza")
+    @NamedQuery(name="Destreza.fineAll", query="SELECT d FROM destreza d ORDER BY d.id_destreza")
 })
 @Table(name="destreza")
-public class Destreza implements Serializable {
+public class destreza implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_destreza;
@@ -25,7 +25,10 @@ public class Destreza implements Serializable {
     private int danio;
     private int multiplicador;
 
-    public Destreza(int id_destreza, String tipo, int danio, int multiplicador) {
+    public destreza() {
+    }
+
+    public destreza(int id_destreza, String tipo, int danio, int multiplicador) {
         this.id_destreza = id_destreza;
         this.tipo = tipo;
         this.danio = danio;
@@ -69,7 +72,7 @@ public class Destreza implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Destreza other = (Destreza) obj;
+        final destreza other = (destreza) obj;
         if (this.id_destreza != other.id_destreza) {
             return false;
         }

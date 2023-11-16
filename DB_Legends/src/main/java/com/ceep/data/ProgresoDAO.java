@@ -4,8 +4,8 @@
  */
 package com.ceep.data;
 
-import com.ceep.dominio.Progreso;
-import com.ceep.dominio.Usuario;
+import com.ceep.dominio.progreso;
+import com.ceep.dominio.usuario;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -21,22 +21,22 @@ public class ProgresoDAO implements IProgresoDAO{
     EntityManager em;
     
     @Override
-    public Progreso findProgresoId(Usuario usuario) {
+    public progreso findProgresoId(usuario usuario) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void insertarProgeso(Progreso progreso, Usuario usuario) {
+    public void insertarProgeso(progreso progreso, usuario usuario) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void actualizarProgeso(Progreso progreso, Usuario usuario) {
+    public void actualizarProgeso(progreso progreso, usuario usuario) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void eliminarProgeso(Progreso progreso, Usuario usuario) {
+    public void eliminarProgeso(progreso progreso, usuario usuario) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     

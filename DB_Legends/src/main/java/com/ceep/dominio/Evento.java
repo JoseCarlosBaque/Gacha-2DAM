@@ -4,6 +4,7 @@
  */
 package com.ceep.dominio;
 
+import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,7 +23,7 @@ import javax.persistence.Table;
     @NamedQuery(name="Evento.fineAll", query="SELECT p FROM evento p ORDER BY p.id_evento")
 })
 @Table(name="evento")
-public class Evento {
+public class evento implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_evento;
@@ -30,19 +31,19 @@ public class Evento {
     private String nombre;
     private int niveles;
 
-    public Evento() {
+    public evento() {
     }
 
-    public Evento(int id_evento) {
+    public evento(int id_evento) {
         this.id_evento = id_evento;
     }
 
-    public Evento(int id_evento, int id_progreso) {
+    public evento(int id_evento, int id_progreso) {
         this.id_evento = id_evento;
         this.id_progreso = id_progreso;
     }
 
-    public Evento(int id_evento, int id_progreso, String nombre, int niveles) {
+    public evento(int id_evento, int id_progreso, String nombre, int niveles) {
         this.id_evento = id_evento;
         this.id_progreso = id_progreso;
         this.nombre = nombre;
@@ -102,7 +103,7 @@ public class Evento {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Evento other = (Evento) obj;
+        final evento other = (evento) obj;
         if (this.id_evento != other.id_evento) {
             return false;
         }

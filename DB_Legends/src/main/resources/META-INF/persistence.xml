@@ -3,5 +3,13 @@
     <!-- Define Persistence Unit -->
     <persistence-unit name="DBL_PU" transaction-type="JTA">
         <jta-data-source>jdbc/DBLPool</jta-data-source>
+<!--        <class>com.ceep.dominio.Banner</class>
+        <class>com.ceep.dominio.Destreza</class>
+        <class>com.ceep.dominio.Evento</class>
+        <class>com.ceep.dominio.Item</class>
+        <class>com.ceep.dominio.Personaje</class>
+        <class>com.ceep.dominio.Progreso</class>
+        <class>com.ceep.dominio.Tienda</class>
+        <class>com.ceep.dominio.Usuario</class>-->
     </persistence-unit>
 </persistence>
