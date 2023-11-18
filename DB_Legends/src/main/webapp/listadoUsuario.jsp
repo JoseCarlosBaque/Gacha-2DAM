@@ -16,7 +16,7 @@
         <h1>Listado Usuario</h1>
         <ul>
             <c:forEach items="${usuarios}"  var="usuario">
-                <li>${usuario.nombre} ${usuario.apellidos}</li>
+                <li>${usuario.usuario}</li>
             </c:forEach>
         </ul>
     </body>

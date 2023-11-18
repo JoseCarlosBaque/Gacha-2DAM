@@ -32,4 +32,5 @@ public class UsuarioServlet extends HttpServlet{
         request.setAttribute("usuarios", usuarios);
         request.getRequestDispatcher("listadoUsuario.jsp").forward(request, response);
     }
+
 }
