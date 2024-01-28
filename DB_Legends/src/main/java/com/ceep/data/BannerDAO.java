@@ -21,7 +21,7 @@ public class BannerDAO implements IBannerDAO{
     EntityManager em;
     
     @Override
-    public List<banner> findAllBanne() {
+    public List<banner> findAllBanner() {
         return em.createNamedQuery("Banner.findAll").getResultList();
     }
 

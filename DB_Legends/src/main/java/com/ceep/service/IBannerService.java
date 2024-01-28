@@ -12,7 +12,7 @@ import java.util.List;
  * @author joseb
  */
 public interface IBannerService {
-    public List<banner> findAllBanne();
+    public List<banner> listarBanner();
     
     public void insertarBanner(banner banner);
     

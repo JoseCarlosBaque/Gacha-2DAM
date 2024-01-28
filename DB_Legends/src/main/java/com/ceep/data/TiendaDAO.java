@@ -27,7 +27,7 @@ public class TiendaDAO implements ITiendaDAO {
 
     @Override
     public tienda findTiendaId(tienda tienda) {
-        return em.find(tienda.class, tienda.getId_tienda());
+        return em.find(tienda.class, tienda.getIdTienda());
     }
 
 }

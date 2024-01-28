@@ -12,7 +12,7 @@ import java.util.List;
  * @author joseb
  */
 public interface IBannerDAO {
-    public List<banner> findAllBanne();
+    public List<banner> findAllBanner();
     
     public void insertarBanner(banner banner);
     

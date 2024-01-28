@@ -27,7 +27,7 @@ public class EventoDAO implements IEventoDAO{
 
     @Override
     public evento findEventoId(evento evento) {
-        return em.find(evento.class, evento.getId_evento());
+        return em.find(evento.class, evento.getIdEvento());
     }
 
     @Override

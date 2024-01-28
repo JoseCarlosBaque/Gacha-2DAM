@@ -27,7 +27,7 @@ public class ItemDAO implements IItemDAO {
 
     @Override
     public item findItemId(item item) {
-        return em.find(item.class, item.getId_item());
+        return em.find(item.class, item.getIdItem());
     }
 
     @Override

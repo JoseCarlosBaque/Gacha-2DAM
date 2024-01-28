@@ -27,7 +27,7 @@ public class PersonajeDAO implements IPersonajeDAO{
 
     @Override
     public personaje findPersonajeId(personaje personaje) {
-        return em.find(personaje.class, personaje.getId_personaje());
+        return em.find(personaje.class, personaje.getIdPersonaje());
     }
 
     @Override

@@ -6,8 +6,13 @@ package com.ceep.dominio;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -15,30 +20,42 @@ import javax.persistence.*;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name="Tienda.fineAll", query="SELECT p FROM tienda p ORDER BY p.id_tienda")
+    @NamedQuery(name="Tienda.fineAll", query="SELECT p FROM tienda p")
 })
 @Table(name="tienda")
 public class tienda implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id_tienda;
+    @Basic(optional = false)
+    @Column(name = "id_tienda")
+    private Integer idTienda;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 60)
+    @Column(name = "nombre")
     private String nombre;
-    private ArrayList<item> items = new ArrayList<item>();
+    @OneToMany(mappedBy = "idTienda")
+    private Collection<item> itemCollection;
 
     public tienda() {
     }
 
-    public tienda(int id_tienda, String nombre) {
-        this.id_tienda = id_tienda;
+    public tienda(Integer idTienda) {
+        this.idTienda = idTienda;
+    }
+
+    public tienda(Integer idTienda, String nombre) {
+        this.idTienda = idTienda;
         this.nombre = nombre;
     }
 
-    public int getId_tienda() {
-        return id_tienda;
+    public Integer getIdTienda() {
+        return idTienda;
     }
 
-    public void setId_tienda(int id_tienda) {
-        this.id_tienda = id_tienda;
+    public void setIdTienda(Integer idTienda) {
+        this.idTienda = idTienda;
     }
 
     public String getNombre() {
@@ -49,20 +66,21 @@ public class tienda implements Serializable {
         this.nombre = nombre;
     }
 
-    public ArrayList<item> getItems() {
-        return items;
+    @XmlTransient
+    public Collection<item> getItemCollection() {
+        return itemCollection;
     }
 
-    public void setItems(ArrayList<item> items) {
-        this.items = items;
+    public void setItemCollection(Collection<item> itemCollection) {
+        this.itemCollection = itemCollection;
     }
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 43 * hash + this.id_tienda;
-        hash = 43 * hash + Objects.hashCode(this.nombre);
-        hash = 43 * hash + Objects.hashCode(this.items);
+        int hash = 5;
+        hash = 89 * hash + Objects.hashCode(this.idTienda);
+        hash = 89 * hash + Objects.hashCode(this.nombre);
+        hash = 89 * hash + Objects.hashCode(this.itemCollection);
         return hash;
     }
 
@@ -78,12 +96,17 @@ public class tienda implements Serializable {
             return false;
         }
         final tienda other = (tienda) obj;
-        if (this.id_tienda != other.id_tienda) {
-            return false;
-        }
         if (!Objects.equals(this.nombre, other.nombre)) {
             return false;
         }
-        return Objects.equals(this.items, other.items);
+        if (!Objects.equals(this.idTienda, other.idTienda)) {
+            return false;
+        }
+        return Objects.equals(this.itemCollection, other.itemCollection);
+    }
+
+    @Override
+    public String toString() {
+        return "tienda{" + "idTienda=" + idTienda + ", nombre=" + nombre + ", itemCollection=" + itemCollection + '}';
     }
 }

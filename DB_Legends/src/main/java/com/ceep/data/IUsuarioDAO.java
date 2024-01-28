@@ -16,6 +16,8 @@ public interface IUsuarioDAO {
     
     public usuario findUsuarioId(usuario usuario);
     
+    public usuario findUsuario(String nombre, String clave);
+    
     public void insertarUsuario(usuario usuario);
     
     public void actualizarUsuario(usuario usuario);

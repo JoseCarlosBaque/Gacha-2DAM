@@ -5,14 +5,21 @@
 package com.ceep.dominio;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Objects;
+import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -20,45 +27,69 @@ import javax.persistence.Table;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name="Banner.fineAll", query="SELECT p FROM banner p ORDER BY p.id_banner")
+    @NamedQuery(name = "Banner.findAll", query = "SELECT p FROM banner p") //ORDER BY p.id_banner no va xd
 })
-@Table(name="banner")
+@Table(name = "banner")
 public class banner implements Serializable {
+
+    @Size(max = 20)
+    @Column(name = "nombre")
+    private String nombre;
+    @Basic(optional = false)
+    @NotNull()
+    @Column(name = "precio")
+    private int precio;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "step")
+    private int step;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "prob_nuevo")
+    private int probNuevo;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "prob_sp")
+    private int probSp;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "prob_ex")
+    private int probEx;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "prob_hero")
+    private int probHero;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 200)
+    @Column(name = "descripcion")
+    private String descripcion;
+    @ManyToMany(mappedBy = "bannerCollection")
+    private Collection<item> itemCollection;
+    @ManyToMany(mappedBy = "bannerCollection")
+    private Collection<personaje> personajeCollection;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id_banner;
-    private String nombre;
-    private int precio;
-    private int step;
-    private int prob_nuevo;
-    private int prob_sp;
-    private int prob_ex;
-    private int prob_hero;
+    @Basic(optional = false)
+    @Column(name = "id_banner")
+    private int idBanner;
 
     public banner() {
     }
 
     public banner(int id_banner) {
-        this.id_banner = id_banner;
+        this.idBanner = id_banner;
     }
 
-    public banner(int id_banner, String nombre, int precio, int step, int prob_nuevo, int prob_sp, int prob_ex, int prob_hero) {
-        this.id_banner = id_banner;
-        this.nombre = nombre;
+    public banner(Integer idBanner, int precio, int step, int probNuevo, int probSp, int probEx, int probHero, String descripcion) {
+        this.idBanner = idBanner;
         this.precio = precio;
         this.step = step;
-        this.prob_nuevo = prob_nuevo;
-        this.prob_sp = prob_sp;
-        this.prob_ex = prob_ex;
-        this.prob_hero = prob_hero;
-    }
-
-    public int getId_banner() {
-        return id_banner;
-    }
-
-    public void setId_banner(int id_banner) {
-        this.id_banner = id_banner;
+        this.probNuevo = probNuevo;
+        this.probSp = probSp;
+        this.probEx = probEx;
+        this.probHero = probHero;
+        this.descripcion = descripcion;
     }
 
     public String getNombre() {
@@ -85,49 +116,83 @@ public class banner implements Serializable {
         this.step = step;
     }
 
-    public int getProb_nuevo() {
-        return prob_nuevo;
+    public int getProbNuevo() {
+        return probNuevo;
     }
 
-    public void setProb_nuevo(int prob_nuevo) {
-        this.prob_nuevo = prob_nuevo;
+    public void setProbNuevo(int probNuevo) {
+        this.probNuevo = probNuevo;
     }
 
-    public int getProb_sp() {
-        return prob_sp;
+    public int getProbSp() {
+        return probSp;
     }
 
-    public void setProb_sp(int prob_sp) {
-        this.prob_sp = prob_sp;
+    public void setProbSp(int probSp) {
+        this.probSp = probSp;
     }
 
-    public int getProb_ex() {
-        return prob_ex;
+    public int getProbEx() {
+        return probEx;
     }
 
-    public void setProb_ex(int prob_ex) {
-        this.prob_ex = prob_ex;
+    public void setProbEx(int probEx) {
+        this.probEx = probEx;
     }
 
-    public int getProb_hero() {
-        return prob_hero;
+    public int getProbHero() {
+        return probHero;
     }
 
-    public void setProb_hero(int prob_hero) {
-        this.prob_hero = prob_hero;
+    public void setProbHero(int probHero) {
+        this.probHero = probHero;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public int getIdBanner() {
+        return idBanner;
+    }
+
+    public void setIdBanner(int idBanner) {
+        this.idBanner = idBanner;
+    }
+
+    @XmlTransient
+    public Collection<item> getItemCollection() {
+        return itemCollection;
+    }
+
+    public void setItemCollection(Collection<item> itemCollection) {
+        this.itemCollection = itemCollection;
+    }
+
+    @XmlTransient
+    public Collection<personaje> getPersonajeCollection() {
+        return personajeCollection;
+    }
+
+    public void setPersonajeCollection(Collection<personaje> personajeCollection) {
+        this.personajeCollection = personajeCollection;
     }
 
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 37 * hash + this.id_banner;
+        hash = 37 * hash + this.idBanner;
         hash = 37 * hash + Objects.hashCode(this.nombre);
         hash = 37 * hash + this.precio;
         hash = 37 * hash + this.step;
-        hash = 37 * hash + this.prob_nuevo;
-        hash = 37 * hash + this.prob_sp;
-        hash = 37 * hash + this.prob_ex;
-        hash = 37 * hash + this.prob_hero;
+        hash = 37 * hash + this.probNuevo;
+        hash = 37 * hash + this.probSp;
+        hash = 37 * hash + this.probEx;
+        hash = 37 * hash + this.probHero;
         return hash;
     }
 
@@ -143,7 +208,7 @@ public class banner implements Serializable {
             return false;
         }
         final banner other = (banner) obj;
-        if (this.id_banner != other.id_banner) {
+        if (!Objects.equals(this.idBanner, other.idBanner)) {
             return false;
         }
         if (this.precio != other.precio) {
@@ -152,18 +217,23 @@ public class banner implements Serializable {
         if (this.step != other.step) {
             return false;
         }
-        if (this.prob_nuevo != other.prob_nuevo) {
+        if (this.probNuevo != other.probNuevo) {
             return false;
         }
-        if (this.prob_sp != other.prob_sp) {
+        if (this.probSp != other.probSp) {
             return false;
         }
-        if (this.prob_ex != other.prob_ex) {
+        if (this.probEx != other.probEx) {
             return false;
         }
-        if (this.prob_hero != other.prob_hero) {
+        if (this.probHero != other.probHero) {
             return false;
         }
         return Objects.equals(this.nombre, other.nombre);
+    }
+
+    @Override
+    public String toString() {
+        return "banner{" + "idBanner=" + idBanner + ", nombre=" + nombre + ", precio=" + precio + ", step=" + step + ", probNuevo=" + probNuevo + ", probSp=" + probSp + ", probEx=" + probEx + ", probHero=" + probHero + ", descripcion=" + descripcion + '}';
     }
 }

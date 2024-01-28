@@ -5,72 +5,145 @@
 package com.ceep.dominio;
 
 import java.io.Serializable;
-import java.util.Objects;
+import java.util.Collection;
+import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author joseb
  */
 @Entity
+@Table(name = "personaje")
+@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name="Personaje.fineAll", query="SELECT p FROM personaje p ORDER BY p.id_personaje")
+    @NamedQuery(name = "personaje.findAll", query = "SELECT p FROM personaje p"),
+//    @NamedQuery(name = "personaje.findByIdPersonaje", query = "SELECT p FROM personaje p WHERE p.id_Personaje = :id_Personaje"),
+//    @NamedQuery(name = "personaje.findByNombre", query = "SELECT p FROM personaje p WHERE p.nombre = :nombre"),
+//    @NamedQuery(name = "personaje.findByTitulo", query = "SELECT p FROM personaje p WHERE p.titulo = :titulo"),
+//    @NamedQuery(name = "personaje.findByTipo", query = "SELECT p FROM personaje p WHERE p.tipo = :tipo"),
+//    @NamedQuery(name = "personaje.findBySalud", query = "SELECT p FROM personaje p WHERE p.salud = :salud"),
+//    @NamedQuery(name = "personaje.findByNivel", query = "SELECT p FROM personaje p WHERE p.nivel = :nivel"),
+//    @NamedQuery(name = "personaje.findByDanioFisico", query = "SELECT p FROM personaje p WHERE p.danioFisico = :danioFisico"),
+//    @NamedQuery(name = "personaje.findByDanioEnergia", query = "SELECT p FROM personaje p WHERE p.danioEnergia = :danioEnergia"),
+//    @NamedQuery(name = "personaje.findByDefensaFisico", query = "SELECT p FROM personaje p WHERE p.defensaFisico = :defensaFisico"),
+//    @NamedQuery(name = "personaje.findByDefensaEnergia", query = "SELECT p FROM personaje p WHERE p.defensaEnergia = :defensaEnergia"),
+//    @NamedQuery(name = "personaje.findByCritico", query = "SELECT p FROM personaje p WHERE p.critico = :critico"),
+//    @NamedQuery(name = "personaje.findBySoul", query = "SELECT p FROM personaje p WHERE p.soul = :soul"),
+//    @NamedQuery(name = "personaje.findByEstrellas", query = "SELECT p FROM personaje p WHERE p.estrellas = :estrellas")
 })
-@Table(name="personaje")
 public class personaje implements Serializable {
+
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id_personaje;
+    @Basic(optional = false)
+    @Column(name = "id_personaje")
+    private Integer idPersonaje;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
+    @Column(name = "nombre")
     private String nombre;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 10)
+    @Column(name = "titulo")
     private String titulo;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
+    @Column(name = "tipo")
     private String tipo;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "salud")
     private int salud;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "nivel")
     private int nivel;
-    private int daño_fisico;
-    private int daño_energia;
-    private int defensa_fisica;
-    private int defensa_enegia;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "danio_fisico")
+    private int danioFisico;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "danio_energia")
+    private int danioEnergia;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "defensa_fisico")
+    private int defensaFisico;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "defensa_energia")
+    private int defensaEnergia;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "critico")
     private int critico;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "soul")
     private int soul;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "estrellas")
     private int estrellas;
-    private boolean conseguido;
+    @JoinTable(name = "personaje_banner", joinColumns = {
+        @JoinColumn(name = "id_personaje", referencedColumnName = "id_personaje")}, inverseJoinColumns = {
+        @JoinColumn(name = "id_banner", referencedColumnName = "id_banner")})
+    @ManyToMany
+    private Collection<banner> bannerCollection;
+    @JoinColumn(name = "id_destreza", referencedColumnName = "id_destreza")
+    @ManyToOne
+    private destreza idDestreza;
 
     public personaje() {
     }
 
-    public personaje(int id_personaje) {
-        this.id_personaje = id_personaje;
+    public personaje(Integer idPersonaje) {
+        this.idPersonaje = idPersonaje;
     }
 
-    public personaje(int id_personaje, String nombre, String titulo, String tipo, int salud, int nivel, int daño_fisico, int daño_energia, int defensa_fisica, int defensa_enegia, int critico, int soul, int estrellas, boolean conseguido) {
-        this.id_personaje = id_personaje;
+    public personaje(Integer idPersonaje, String nombre, String titulo, String tipo, int salud, int nivel, int danioFisico, int danioEnergia, int defensaFisico, int defensaEnergia, int critico, int soul, int estrellas) {
+        this.idPersonaje = idPersonaje;
         this.nombre = nombre;
         this.titulo = titulo;
         this.tipo = tipo;
         this.salud = salud;
         this.nivel = nivel;
-        this.daño_fisico = daño_fisico;
-        this.daño_energia = daño_energia;
-        this.defensa_fisica = defensa_fisica;
-        this.defensa_enegia = defensa_enegia;
+        this.danioFisico = danioFisico;
+        this.danioEnergia = danioEnergia;
+        this.defensaFisico = defensaFisico;
+        this.defensaEnergia = defensaEnergia;
         this.critico = critico;
         this.soul = soul;
         this.estrellas = estrellas;
-        this.conseguido = conseguido;
     }
 
-    public int getId_personaje() {
-        return id_personaje;
+    public Integer getIdPersonaje() {
+        return idPersonaje;
     }
 
-    public void setId_personaje(int id_personaje) {
-        this.id_personaje = id_personaje;
+    public void setIdPersonaje(Integer idPersonaje) {
+        this.idPersonaje = idPersonaje;
     }
 
     public String getNombre() {
@@ -113,36 +186,36 @@ public class personaje implements Serializable {
         this.nivel = nivel;
     }
 
-    public int getDaño_fisico() {
-        return daño_fisico;
+    public int getDanioFisico() {
+        return danioFisico;
     }
 
-    public void setDaño_fisico(int daño_fisico) {
-        this.daño_fisico = daño_fisico;
+    public void setDanioFisico(int danioFisico) {
+        this.danioFisico = danioFisico;
     }
 
-    public int getDaño_energia() {
-        return daño_energia;
+    public int getDanioEnergia() {
+        return danioEnergia;
     }
 
-    public void setDaño_energia(int daño_energia) {
-        this.daño_energia = daño_energia;
+    public void setDanioEnergia(int danioEnergia) {
+        this.danioEnergia = danioEnergia;
     }
 
-    public int getDefensa_fisica() {
-        return defensa_fisica;
+    public int getDefensaFisico() {
+        return defensaFisico;
     }
 
-    public void setDefensa_fisica(int defensa_fisica) {
-        this.defensa_fisica = defensa_fisica;
+    public void setDefensaFisico(int defensaFisico) {
+        this.defensaFisico = defensaFisico;
     }
 
-    public int getDefensa_enegia() {
-        return defensa_enegia;
+    public int getDefensaEnergia() {
+        return defensaEnergia;
     }
 
-    public void setDefensa_enegia(int defensa_enegia) {
-        this.defensa_enegia = defensa_enegia;
+    public void setDefensaEnergia(int defensaEnergia) {
+        this.defensaEnergia = defensaEnergia;
     }
 
     public int getCritico() {
@@ -169,85 +242,46 @@ public class personaje implements Serializable {
         this.estrellas = estrellas;
     }
 
-    public boolean isConseguido() {
-        return conseguido;
+    @XmlTransient
+    public Collection<banner> getBannerCollection() {
+        return bannerCollection;
     }
 
-    public void setConseguido(boolean conseguido) {
-        this.conseguido = conseguido;
+    public void setBannerCollection(Collection<banner> bannerCollection) {
+        this.bannerCollection = bannerCollection;
+    }
+
+    public destreza getIdDestreza() {
+        return idDestreza;
+    }
+
+    public void setIdDestreza(destreza idDestreza) {
+        this.idDestreza = idDestreza;
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 31 * hash + this.id_personaje;
-        hash = 31 * hash + Objects.hashCode(this.nombre);
-        hash = 31 * hash + Objects.hashCode(this.titulo);
-        hash = 31 * hash + Objects.hashCode(this.tipo);
-        hash = 31 * hash + this.salud;
-        hash = 31 * hash + this.nivel;
-        hash = 31 * hash + this.daño_fisico;
-        hash = 31 * hash + this.daño_energia;
-        hash = 31 * hash + this.defensa_fisica;
-        hash = 31 * hash + this.defensa_enegia;
-        hash = 31 * hash + this.critico;
-        hash = 31 * hash + this.soul;
-        hash = 31 * hash + this.estrellas;
-        hash = 31 * hash + (this.conseguido ? 1 : 0);
+        int hash = 0;
+        hash += (idPersonaje != null ? idPersonaje.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof personaje)) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
+        personaje other = (personaje) object;
+        if ((this.idPersonaje == null && other.idPersonaje != null) || (this.idPersonaje != null && !this.idPersonaje.equals(other.idPersonaje))) {
             return false;
         }
-        final personaje other = (personaje) obj;
-        if (this.id_personaje != other.id_personaje) {
-            return false;
-        }
-        if (this.salud != other.salud) {
-            return false;
-        }
-        if (this.nivel != other.nivel) {
-            return false;
-        }
-        if (this.daño_fisico != other.daño_fisico) {
-            return false;
-        }
-        if (this.daño_energia != other.daño_energia) {
-            return false;
-        }
-        if (this.defensa_fisica != other.defensa_fisica) {
-            return false;
-        }
-        if (this.defensa_enegia != other.defensa_enegia) {
-            return false;
-        }
-        if (this.critico != other.critico) {
-            return false;
-        }
-        if (this.soul != other.soul) {
-            return false;
-        }
-        if (this.estrellas != other.estrellas) {
-            return false;
-        }
-        if (this.conseguido != other.conseguido) {
-            return false;
-        }
-        if (!Objects.equals(this.nombre, other.nombre)) {
-            return false;
-        }
-        if (!Objects.equals(this.titulo, other.titulo)) {
-            return false;
-        }
-        return Objects.equals(this.tipo, other.tipo);
+        return true;
     }
+
+    @Override
+    public String toString() {
+        return "com.ceep.dominio.Personaje_1[ idPersonaje=" + idPersonaje + " ]";
+    }
+    
 }

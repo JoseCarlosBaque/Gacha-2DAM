@@ -6,8 +6,10 @@ package com.ceep.dominio;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.Collection;
 import java.util.Objects;
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -15,70 +17,91 @@ import javax.persistence.*;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name="Progreso.fineAll", query="SELECT p FROM progreso p ORDER BY p.id_progreso")
+    @NamedQuery(name="Progreso.fineAll", query="SELECT p FROM progreso p")
 })
 @Table(name="progreso")
 public class progreso implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id_progreso;
-    private int id_usuario;
-    private int experiencia;
-    private Date fecha;
+    @Basic(optional = false)
+    @Column(name = "id_progreso")
+    private Integer idProgreso;
+    @Column(name = "experiencia")
+    private Integer experiencia;
+    @Column(name = "fecha")
+    @Temporal(TemporalType.DATE)
+    private java.util.Date fecha;
+    @OneToMany(mappedBy = "idProgreso")
+    private Collection<evento> eventoCollection;
+    @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario")
+    @ManyToOne
+    private usuario idUsuario;
 
     public progreso() {
     }
 
-    public progreso(int id_progreso) {
-        this.id_progreso = id_progreso;
+    public progreso(Integer idProgreso) {
+        this.idProgreso = idProgreso;
     }
 
-    public progreso(int id_progreso, int id_usuario, int experiencia, Date fecha) {
-        this.id_progreso = id_progreso;
-        this.id_usuario = id_usuario;
+    public progreso(Integer idProgreso, Integer experiencia, java.util.Date fecha, Collection<evento> eventoCollection, usuario idUsuario) {
+        this.idProgreso = idProgreso;
         this.experiencia = experiencia;
         this.fecha = fecha;
+        this.eventoCollection = eventoCollection;
+        this.idUsuario = idUsuario;
     }
 
-    public int getId_progreso() {
-        return id_progreso;
+    public Integer getIdProgreso() {
+        return idProgreso;
     }
 
-    public void setId_progreso(int id_progreso) {
-        this.id_progreso = id_progreso;
+    public void setIdProgreso(Integer idProgreso) {
+        this.idProgreso = idProgreso;
     }
 
-    public int getId_usuario() {
-        return id_usuario;
-    }
-
-    public void setId_usuario(int id_usuario) {
-        this.id_usuario = id_usuario;
-    }
-
-    public int getExperiencia() {
+    public Integer getExperiencia() {
         return experiencia;
     }
 
-    public void setExperiencia(int experiencia) {
+    public void setExperiencia(Integer experiencia) {
         this.experiencia = experiencia;
     }
 
-    public Date getFecha() {
+    public java.util.Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(java.util.Date fecha) {
         this.fecha = fecha;
+    }
+
+    @XmlTransient
+    public Collection<evento> getEventoCollection() {
+        return eventoCollection;
+    }
+
+    public void setEventoCollection(Collection<evento> eventoCollection) {
+        this.eventoCollection = eventoCollection;
+    }
+
+    public usuario getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(usuario idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 59 * hash + this.id_progreso;
-        hash = 59 * hash + this.id_usuario;
-        hash = 59 * hash + this.experiencia;
-        hash = 59 * hash + Objects.hashCode(this.fecha);
+        int hash = 5;
+        hash = 29 * hash + Objects.hashCode(this.idProgreso);
+        hash = 29 * hash + Objects.hashCode(this.experiencia);
+        hash = 29 * hash + Objects.hashCode(this.fecha);
+        hash = 29 * hash + Objects.hashCode(this.eventoCollection);
+        hash = 29 * hash + Objects.hashCode(this.idUsuario);
         return hash;
     }
 
@@ -94,15 +117,23 @@ public class progreso implements Serializable {
             return false;
         }
         final progreso other = (progreso) obj;
-        if (this.id_progreso != other.id_progreso) {
+        if (!Objects.equals(this.idProgreso, other.idProgreso)) {
             return false;
         }
-        if (this.id_usuario != other.id_usuario) {
+        if (!Objects.equals(this.experiencia, other.experiencia)) {
             return false;
         }
-        if (this.experiencia != other.experiencia) {
+        if (!Objects.equals(this.fecha, other.fecha)) {
             return false;
         }
-        return Objects.equals(this.fecha, other.fecha);
+        if (!Objects.equals(this.eventoCollection, other.eventoCollection)) {
+            return false;
+        }
+        return Objects.equals(this.idUsuario, other.idUsuario);
+    }
+
+    @Override
+    public String toString() {
+        return "progreso{" + "idProgreso=" + idProgreso + ", experiencia=" + experiencia + ", fecha=" + fecha + ", eventoCollection=" + eventoCollection + ", idUsuario=" + idUsuario + '}';
     }
 }

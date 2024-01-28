@@ -27,7 +27,16 @@ public class UsuarioDAO implements IUsuarioDAO {
 
     @Override
     public usuario findUsuarioId(usuario usuario) {
-        return em.find(usuario.class, usuario.getId_usuario());
+        return em.find(usuario.class, usuario.getIdUsuario());
+    }
+    
+    @Override
+    public usuario findUsuario(String nombre, String clave) {
+        usuario user = (usuario) em.createNamedQuery("Usuario.login")
+                .setParameter("usuario", nombre)
+                .setParameter("clave", clave)
+                .getSingleResult();
+        return user;
     }
 
     @Override

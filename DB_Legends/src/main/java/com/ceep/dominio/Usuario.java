@@ -5,8 +5,12 @@
 package com.ceep.dominio;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Objects;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -14,44 +18,69 @@ import javax.persistence.*;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name="Usuario.findAll", query="SELECT p FROM usuario p ORDER BY p.id_usuario")
+    @NamedQuery(name="Usuario.findAll", query="SELECT p FROM usuario p"), //ORDER BY p.id_usuario iba pero des pues de importar la clase ya no va
+    @NamedQuery(name="Usuario.login", query="SELECT p FROM usuario p WHERE p.usuario = :usuario AND p.clave = :clave")
 })
 @Table(name="usuario")
 public class usuario implements Serializable {
-    private static final long SerialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id_usuario;
+    @Basic(optional = false)
+    @Column(name = "id_usuario")
+    private Integer idUsuario;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(name = "usuario")
     private String usuario;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
+    @Column(name = "clave")
     private String clave;
-    private int nivel;
+    @Column(name = "nivel")
+    private Integer nivel;
+    @Size(max = 125)
+    @Column(name = "lista_personajes")
+    private String listaPersonajes;
+    @OneToMany(mappedBy = "idUsuario")
+    private Collection<progreso> progresoCollection;
+    private static final long SerialVersionUID = 1L;
 
     public usuario() {
     }
 
-    public usuario(int id_usuario) {
-        this.id_usuario = id_usuario;
+    public usuario(Integer idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
-    public usuario(int id_usuario, String usuario, String clave, int nivel) {
-        this.id_usuario = id_usuario;
+    public usuario(Integer idUsuario, String usuario, String clave) {
+        this.idUsuario = idUsuario;
+        this.usuario = usuario;
+        this.clave = clave;
+    }
+
+    public usuario(String usuario, String clave, Integer nivel) {
         this.usuario = usuario;
         this.clave = clave;
         this.nivel = nivel;
     }
 
-    public usuario(String usuario, String clave, int nivel) {
+    public usuario(String usuario, String clave, Integer nivel, String listaPersonajes, Collection<progreso> progresoCollection) {
         this.usuario = usuario;
         this.clave = clave;
         this.nivel = nivel;
+        this.listaPersonajes = listaPersonajes;
+        this.progresoCollection = progresoCollection;
     }
 
-    public int getId_usuario() {
-        return id_usuario;
+    public Integer getIdUsuario() {
+        return idUsuario;
     }
 
-    public void setId_usuario(int id_usuario) {
-        this.id_usuario = id_usuario;
+    public void setIdUsuario(Integer idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     public String getUsuario() {
@@ -70,21 +99,40 @@ public class usuario implements Serializable {
         this.clave = clave;
     }
 
-    public int getNivel() {
+    public Integer getNivel() {
         return nivel;
     }
 
-    public void setNivel(int nivel) {
+    public void setNivel(Integer nivel) {
         this.nivel = nivel;
+    }
+
+    public String getListaPersonajes() {
+        return listaPersonajes;
+    }
+
+    public void setListaPersonajes(String listaPersonajes) {
+        this.listaPersonajes = listaPersonajes;
+    }
+
+    @XmlTransient
+    public Collection<progreso> getProgresoCollection() {
+        return progresoCollection;
+    }
+
+    public void setProgresoCollection(Collection<progreso> progresoCollection) {
+        this.progresoCollection = progresoCollection;
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 97 * hash + this.id_usuario;
+        int hash = 5;
+        hash = 97 * hash + Objects.hashCode(this.idUsuario);
         hash = 97 * hash + Objects.hashCode(this.usuario);
         hash = 97 * hash + Objects.hashCode(this.clave);
-        hash = 97 * hash + this.nivel;
+        hash = 97 * hash + Objects.hashCode(this.nivel);
+        hash = 97 * hash + Objects.hashCode(this.listaPersonajes);
+        hash = 97 * hash + Objects.hashCode(this.progresoCollection);
         return hash;
     }
 
@@ -100,15 +148,26 @@ public class usuario implements Serializable {
             return false;
         }
         final usuario other = (usuario) obj;
-        if (this.id_usuario != other.id_usuario) {
-            return false;
-        }
-        if (this.nivel != other.nivel) {
-            return false;
-        }
         if (!Objects.equals(this.usuario, other.usuario)) {
             return false;
         }
-        return Objects.equals(this.clave, other.clave);
+        if (!Objects.equals(this.clave, other.clave)) {
+            return false;
+        }
+        if (!Objects.equals(this.listaPersonajes, other.listaPersonajes)) {
+            return false;
+        }
+        if (!Objects.equals(this.idUsuario, other.idUsuario)) {
+            return false;
+        }
+        if (!Objects.equals(this.nivel, other.nivel)) {
+            return false;
+        }
+        return Objects.equals(this.progresoCollection, other.progresoCollection);
+    }
+
+    @Override
+    public String toString() {
+        return "usuario{" + "idUsuario=" + idUsuario + ", usuario=" + usuario + ", clave=" + clave + ", nivel=" + nivel + ", listaPersonajes=" + listaPersonajes + ", progresoCollection=" + progresoCollection + '}';
     }
 }
