@@ -34,5 +34,15 @@ public class BannerDAO implements IBannerDAO{
     public void borrarBanner(banner banner) {
         em.remove(em.merge(banner));
     }
+
+    @Override
+    public void insertarLista(Byte[] lista) {
+        em.persist(lista);
+    }
+
+    @Override
+    public void actualizarBanner(banner banner) {
+        em.merge(banner);
+    }
     
 }

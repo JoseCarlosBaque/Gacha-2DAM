@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "Destreza.fineAll", query = "SELECT d FROM destreza d")
+    @NamedQuery(name = "Destreza.findAll", query = "SELECT d FROM destreza d")
 })
 @Table(name = "destreza")
 public class destreza implements Serializable {
@@ -39,6 +39,10 @@ public class destreza implements Serializable {
     @NotNull
     @Column(name = "multiplicador")
     private int multiplicador;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "foto")
+    private String foto;
     @OneToMany(mappedBy = "idDestreza")
     private Collection<personaje> personajeCollection;
 
@@ -49,11 +53,12 @@ public class destreza implements Serializable {
         this.idDestreza = idDestreza;
     }
 
-    public destreza(int id_destreza, String tipo, int danio, int multiplicador) {
+    public destreza(int id_destreza, String tipo, int danio, int multiplicador, String foto) {
         this.idDestreza = id_destreza;
         this.tipo = tipo;
         this.danio = danio;
         this.multiplicador = multiplicador;
+        this.foto = foto;
     }
 
     public Integer getIdDestreza() {
@@ -88,6 +93,14 @@ public class destreza implements Serializable {
         this.multiplicador = multiplicador;
     }
 
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
+    }
+
     @XmlTransient
     public Collection<personaje> getPersonajeCollection() {
         return personajeCollection;
@@ -99,11 +112,13 @@ public class destreza implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 89 * hash + this.idDestreza;
-        hash = 89 * hash + Objects.hashCode(this.tipo);
-        hash = 89 * hash + this.danio;
-        hash = 89 * hash + this.multiplicador;
+        int hash = 7;
+        hash = 53 * hash + Objects.hashCode(this.idDestreza);
+        hash = 53 * hash + Objects.hashCode(this.tipo);
+        hash = 53 * hash + this.danio;
+        hash = 53 * hash + this.multiplicador;
+        hash = 53 * hash + Objects.hashCode(this.foto);
+        hash = 53 * hash + Objects.hashCode(this.personajeCollection);
         return hash;
     }
 
@@ -119,22 +134,26 @@ public class destreza implements Serializable {
             return false;
         }
         final destreza other = (destreza) obj;
-        if (this.idDestreza != other.idDestreza) {
-            return false;
-        }
         if (this.danio != other.danio) {
             return false;
         }
         if (this.multiplicador != other.multiplicador) {
             return false;
         }
-        return Objects.equals(this.tipo, other.tipo);
+        if (!Objects.equals(this.tipo, other.tipo)) {
+            return false;
+        }
+        if (!Objects.equals(this.foto, other.foto)) {
+            return false;
+        }
+        if (!Objects.equals(this.idDestreza, other.idDestreza)) {
+            return false;
+        }
+        return Objects.equals(this.personajeCollection, other.personajeCollection);
     }
 
     @Override
     public String toString() {
-        return "destreza{" + "idDestreza=" + idDestreza + ", tipo=" + tipo + ", danio=" + danio + ", multiplicador=" + multiplicador + ", personajeCollection=" + personajeCollection + '}';
+        return "destreza{" + "idDestreza=" + idDestreza + ", tipo=" + tipo + ", danio=" + danio + ", multiplicador=" + multiplicador + ", foto=" + foto + ", personajeCollection=" + personajeCollection + '}';
     }
-
-    
 }

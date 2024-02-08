@@ -16,5 +16,9 @@ public interface IBannerService {
     
     public void insertarBanner(banner banner);
     
+    public void actualizarBanner(banner banner);
+    
+    public void insertarLista(Byte[] lista);
+    
     public void borrarBanner(banner banner);
 }

@@ -12,7 +12,7 @@ import java.util.List;
  * @author joseb
  */
 public interface IItemService {
-    public List<item> findAllItem();
+    public List<item> listar_items();
     
     public item findItemId(item item);
     

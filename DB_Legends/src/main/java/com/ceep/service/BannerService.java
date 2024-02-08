@@ -22,6 +22,7 @@ public class BannerService implements IBannerService{
     public List<banner> listarBanner() {
         return bannerDAO.findAllBanner();
     }
+    
     @Override
     public void insertarBanner(banner banner) {
         bannerDAO.insertarBanner(banner);
@@ -30,6 +31,16 @@ public class BannerService implements IBannerService{
     @Override
     public void borrarBanner(banner banner) {
         bannerDAO.borrarBanner(banner);
+    }
+
+    @Override
+    public void insertarLista(Byte[] lista) {
+        bannerDAO.insertarLista(lista);
+    }
+
+    @Override
+    public void actualizarBanner(banner banner) {
+        bannerDAO.actualizarBanner(banner);
     }
     
 }

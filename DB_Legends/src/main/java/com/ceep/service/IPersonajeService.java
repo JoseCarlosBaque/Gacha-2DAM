@@ -12,7 +12,7 @@ import java.util.List;
  * @author joseb
  */
 public interface IPersonajeService {
-    public List<personaje> findAllPersonaje();
+    public List<personaje> listarPersonajes();
     
     public personaje findPersonajeId(personaje personaje);
     

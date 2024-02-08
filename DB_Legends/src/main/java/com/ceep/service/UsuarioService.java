@@ -37,7 +37,7 @@ public class UsuarioService implements IUsuarioService{
 
     @Override
     public void actualizarUsuario(usuario usuario) {
-        usuariodao.actualizarUsuario(usuario);
+        usuariodao.updateUser(usuario);
     }
 
     @Override

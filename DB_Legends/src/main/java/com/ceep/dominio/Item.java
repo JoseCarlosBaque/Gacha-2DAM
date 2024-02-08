@@ -18,10 +18,10 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name="Item.fineAll", query="SELECT p FROM item p")
+    @NamedQuery(name="Item.findAll", query="SELECT p FROM item p")
 })
 @Table(name="item")
-public class item implements Serializable {
+public class item implements Serializable, Cloneable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -157,4 +157,10 @@ public class item implements Serializable {
     public String toString() {
         return "item{" + "idItem=" + idItem + ", nombre=" + nombre + ", cantidad=" + cantidad + ", tipo=" + tipo + ", bannerCollection=" + bannerCollection + ", idTienda=" + idTienda + '}';
     }
+    
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+    
 }

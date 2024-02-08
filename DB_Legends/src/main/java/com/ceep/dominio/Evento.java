@@ -26,9 +26,9 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name="Evento.fineAll", query="SELECT p FROM evento p")
+    @NamedQuery(name = "Evento.findAll", query = "SELECT p FROM evento p")
 })
-@Table(name="evento")
+@Table(name = "evento")
 public class evento implements Serializable {
 
     @Id
@@ -45,13 +45,21 @@ public class evento implements Serializable {
     @NotNull
     @Column(name = "niveles")
     private int niveles;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "foto")
+    private String foto;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 240)
+    @Column(name = "descripcion")
+    private String descripcion;
     @JoinColumn(name = "id_progreso", referencedColumnName = "id_progreso")
     @ManyToOne
     private progreso idProgreso;
 
     public evento() {
     }
-
 
     public evento(Integer idEvento) {
         this.idEvento = idEvento;
@@ -61,6 +69,14 @@ public class evento implements Serializable {
         this.idEvento = idEvento;
         this.nombre = nombre;
         this.niveles = niveles;
+    }
+
+    public evento(Integer idEvento, String nombre, int niveles, String foto, String descripcion) {
+        this.idEvento = idEvento;
+        this.nombre = nombre;
+        this.niveles = niveles;
+        this.foto = foto;
+        this.descripcion = descripcion;
     }
 
     public Integer getIdEvento() {
@@ -87,6 +103,22 @@ public class evento implements Serializable {
         this.niveles = niveles;
     }
 
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
     public progreso getIdProgreso() {
         return idProgreso;
     }
@@ -97,11 +129,13 @@ public class evento implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 79 * hash + Objects.hashCode(this.idEvento);
-        hash = 79 * hash + Objects.hashCode(this.nombre);
-        hash = 79 * hash + this.niveles;
-        hash = 79 * hash + Objects.hashCode(this.idProgreso);
+        int hash = 5;
+        hash = 71 * hash + Objects.hashCode(this.idEvento);
+        hash = 71 * hash + Objects.hashCode(this.nombre);
+        hash = 71 * hash + this.niveles;
+        hash = 71 * hash + Objects.hashCode(this.foto);
+        hash = 71 * hash + Objects.hashCode(this.descripcion);
+        hash = 71 * hash + Objects.hashCode(this.idProgreso);
         return hash;
     }
 
@@ -123,16 +157,29 @@ public class evento implements Serializable {
         if (!Objects.equals(this.nombre, other.nombre)) {
             return false;
         }
+        if (!Objects.equals(this.foto, other.foto)) {
+            return false;
+        }
+        if (!Objects.equals(this.descripcion, other.descripcion)) {
+            return false;
+        }
         if (!Objects.equals(this.idEvento, other.idEvento)) {
             return false;
         }
         return Objects.equals(this.idProgreso, other.idProgreso);
     }
 
-    @Override
-    public String toString() {
-        return "evento{" + "idEvento=" + idEvento + ", nombre=" + nombre + ", niveles=" + niveles + ", idProgreso=" + idProgreso + '}';
+    public String calcular_porcentaje(int danio) {
+        double porcentaje = ((double) danio / 40000) * 100;
+        if (porcentaje == (int) porcentaje) {
+            return String.format("%d", (int) porcentaje);
+        } else {
+            return String.format("%.2f", porcentaje);
+        }
     }
 
-    
+    @Override
+    public String toString() {
+        return "evento{" + "idEvento=" + idEvento + ", nombre=" + nombre + ", niveles=" + niveles + ", foto=" + foto + ", descripcion=" + descripcion + ", idProgreso=" + idProgreso + '}';
+    }
 }

@@ -18,7 +18,7 @@
     %>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-            <div class="navbar-nav">
+            <div class="container navbar-nav">
                 <a class="navbar-item" href="index.jsp">
                     <img src="img/Login.png" alt="Dragon Ball Legends" width="30" height="24">
                 </a>
@@ -30,19 +30,19 @@
                             Menu
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Equipo</a></li>
+                            <li><a class="dropdown-item" href="equipo.jsp">Equipo</a></li>
                             <li><a class="dropdown-item" href="#">Entrenar</a></li>
-                            <li><a class="dropdown-item" href="#">Personajes</a></li>
+                            <li><a class="dropdown-item" href="personajes.jsp">Personajes</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><%= sesion.getAttribute("usuario")%></a>
+                        <a class="nav-link" href="perfil.jsp"><%= sesion.getAttribute("usuario")%></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/DB_Legends/summon?llenar=true">Banners</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Eventos</a>
+                        <a class="nav-link" href="/DB_Legends/evento?llenar=true">Eventos</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Tienda</a>
@@ -57,4 +57,5 @@
             </div>
         </div>
     </nav>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>

@@ -4,17 +4,11 @@
  */
 package com.ceep.web;
 
-import com.ceep.dominio.banner;
-import com.ceep.dominio.destreza;
-import com.ceep.dominio.personaje;
+import com.ceep.dominio.item;
 import com.ceep.dominio.usuario;
-import com.ceep.service.IBannerService;
-import com.ceep.service.IDestrezaService;
-import com.ceep.service.IPersonajeService;
 import com.ceep.service.IUsuarioService;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,8 +24,11 @@ import javax.servlet.http.HttpSession;
  *
  * @author joseb
  */
-@WebServlet(name = "LoginServlet", urlPatterns = {"/login"})
-public class LoginServlet extends HttpServlet {
+@WebServlet(name = "nivelServlet", urlPatterns = {"/nivelServlet"})
+public class NivelServlet extends HttpServlet {
+
+    @Inject
+    IUsuarioService usuarioService;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,38 +39,25 @@ public class LoginServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    @Inject
-    IUsuarioService usuarioservice;
-    @Inject
-    IPersonajeService personajeservice;
-    @Inject
-    IDestrezaService destrezaservice;
-
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ClassNotFoundException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession sesion = request.getSession();
-        List<usuario> usuarios = usuarioservice.listarUsuario();
-        List<personaje> personajes = personajeservice.listarPersonajes();
-        List<destreza> destrezas = destrezaservice.findAllDestreza();
-        if (request.getParameter("enviarL") != null) {
-            String user = request.getParameter("user");
-            String clave = request.getParameter("password");
-            for (usuario usuario : usuarios) {
-                if (usuario.getUsuario().equals(user) && usuario.getClave().equals(clave)) {
-                    sesion.setAttribute("id_usuario", usuario.getIdUsuario());
-                    sesion.setAttribute("usuario", user);
-                    sesion.setAttribute("clave", clave);
-                    sesion.setAttribute("nivel", usuario.getClave());
-                    sesion.setAttribute("equipo", usuario.getListaPersonajes());
-                    sesion.setAttribute("misItems", usuario.getListaItems());
-                    sesion.setAttribute("user", usuario);
-                    sesion.setAttribute("personajes", personajes);
-                    sesion.setAttribute("destrezas", destrezas);
-                    response.sendRedirect("index.jsp");
-                    return;
-                }
-            }
-            response.sendRedirect("login.jsp?error=true");
+        usuario user = (usuario) sesion.getAttribute("user");
+//        int vidaActual = Integer.parseInt(request.getParameter("vidaActual"));
+//        sesion.setAttribute("max_health", vidaActual);
+//        response.sendRedirect("evento.jps?hola=true");
+        byte[] bItems = (byte[]) sesion.getAttribute("misItems");
+        List<item> items = (List<item>) user.deserializar_items(bItems);
+        if (items.get(0).getTipo().equals("Dragon Stone")) {
+            items.get(0).setCantidad(items.get(0).getCantidad() + 1);
+            byte[] actualizar = user.serializar_items(items);
+            user.setListaItems(actualizar);
+            usuarioService.actualizarUsuario(user);
+            sesion.setAttribute("user", user);
+            sesion.setAttribute("misItems", actualizar);
+            response.sendRedirect("eventos.jsp?ds=ganaste");
+        } else {
+            response.sendRedirect("index.jsp");
         }
     }
 
@@ -92,7 +76,7 @@ public class LoginServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(NivelServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -107,13 +91,11 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(NivelServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     /**

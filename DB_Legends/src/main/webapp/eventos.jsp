@@ -1,10 +1,12 @@
 <%-- 
-    Document   : banner
-    Created on : 25-ene-2024, 9:28:21
+    Document   : eventos
+    Created on : 05-feb-2024, 18:54:48
     Author     : joseb
 --%>
 
-<%@page import="com.ceep.dominio.banner"%>
+<%@page import="com.ceep.dominio.item"%>
+<%@page import="com.ceep.dominio.usuario"%>
+<%@page import="com.ceep.dominio.evento"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page session="true"%>
@@ -13,15 +15,35 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="css/banner.css"/>
-        <title>Banners</title>
+        <link rel="stylesheet" href="css/eventos.css"/>
+        <title>Eventos</title>
     </head>
     <body>
         <%@ include file="navbar.jsp" %>
         <%@ include file="scripts.jsp" %>
-        <%    // Obtener la lista completa de banners desde la sesión
-            List<banner> lista = (List<banner>) session.getAttribute("banners");
+        <%    // Obtener la lista completa de eventos desde la sesión
+            usuario user = (usuario) session.getAttribute("user");
+            List<evento> lista = (List<evento>) session.getAttribute("eventos");
+            byte[] bItem = (byte[]) session.getAttribute("misItems");
+            List<item> items = (List<item>) user.deserializar_items(bItem);
         %>
-        <h1 class="col-sm-6 col-md-5 p-4 mx-auto d-flex justify-content-center align-items-center">Consigue Personajes Increibles</h1>
+        <% String mensaje = request.getParameter("ds"); %>
+
+        <% if (mensaje != null && !mensaje.isEmpty()) {%>
+        <div class="alert alert-success" role="alert" id="alerta">
+            Has ganado 1 <%= items.get(0).getTipo()%>
+        </div>
+        <% }%>
+        <script>
+            // Función para ocultar el mensaje después de 5 segundos
+            setTimeout(function () {
+                var mensajeDiv = document.getElementById("alerta");
+                if (mensajeDiv) {
+                    mensajeDiv.style.display = "none";
+                }
+            }, 3000); // 1000 milisegundos = 1 segundos
+        </script>
+        <h1 class="col-sm-6 col-md-5 p-4 mx-auto d-flex justify-content-center align-items-center">Juega para Descubrir la historia de Dragon Ball Legends</h1>
         <div class="container col-sm-6 col-md-5 p-4 mx-auto d-flex justify-content-center align-items-center flex-wrap flex-row">
             <div class="contenedor">
                 <section id="card1" class="card">
@@ -31,8 +53,7 @@
                         <p class="card__description">
                             <%= lista.get(0).getDescripcion()%>
                         </p>
-                        <a href="summon.jsp?id=0" class="nav-link">Ir A tirar</a>
-                        </form>
+                        <a href="evento.jsp?id=0" style="text-decoration: none; color: black;">Jugar</a>
                 </section>
             </div>
             <div class="contenedor">
@@ -43,7 +64,7 @@
                         <p class="card__description">
                             <%= lista.get(1).getDescripcion()%>
                         </p> 
-                        <a href="summon.jsp?id=1" class="nav-link">Ir A tirar</a>
+                        <a href="evento.jsp?id=1" style="text-decoration: none; color: black">Jugar</a>
                     </div>
                 </section>
             </div>
@@ -55,7 +76,7 @@
                         <p class="card__description">
                             <%= lista.get(2).getDescripcion()%>
                         </p>
-                        <a href="summon.jsp?id=2" class="nav-link">Ir A tirar</a>
+                        <a href="evento.jsp?id=2" style="text-decoration: none; color: black">Jugar</a>
                     </div>
                 </section>
             </div>

@@ -6,6 +6,7 @@ package com.ceep.dominio;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,7 +22,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
@@ -29,10 +29,8 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author joseb
  */
 @Entity
-@Table(name = "personaje")
-@XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "personaje.findAll", query = "SELECT p FROM personaje p"),
+    @NamedQuery(name = "Personaje.findAll", query = "SELECT p FROM personaje p")
 //    @NamedQuery(name = "personaje.findByIdPersonaje", query = "SELECT p FROM personaje p WHERE p.id_Personaje = :id_Personaje"),
 //    @NamedQuery(name = "personaje.findByNombre", query = "SELECT p FROM personaje p WHERE p.nombre = :nombre"),
 //    @NamedQuery(name = "personaje.findByTitulo", query = "SELECT p FROM personaje p WHERE p.titulo = :titulo"),
@@ -47,7 +45,8 @@ import javax.xml.bind.annotation.XmlTransient;
 //    @NamedQuery(name = "personaje.findBySoul", query = "SELECT p FROM personaje p WHERE p.soul = :soul"),
 //    @NamedQuery(name = "personaje.findByEstrellas", query = "SELECT p FROM personaje p WHERE p.estrellas = :estrellas")
 })
-public class personaje implements Serializable {
+@Table(name = "personaje")
+public class personaje implements Serializable, Cloneable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -261,27 +260,89 @@ public class personaje implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (idPersonaje != null ? idPersonaje.hashCode() : 0);
+        int hash = 3;
+        hash = 23 * hash + Objects.hashCode(this.idPersonaje);
+        hash = 23 * hash + Objects.hashCode(this.nombre);
+        hash = 23 * hash + Objects.hashCode(this.titulo);
+        hash = 23 * hash + Objects.hashCode(this.tipo);
+        hash = 23 * hash + this.salud;
+        hash = 23 * hash + this.nivel;
+        hash = 23 * hash + this.danioFisico;
+        hash = 23 * hash + this.danioEnergia;
+        hash = 23 * hash + this.defensaFisico;
+        hash = 23 * hash + this.defensaEnergia;
+        hash = 23 * hash + this.critico;
+        hash = 23 * hash + this.soul;
+        hash = 23 * hash + this.estrellas;
+        hash = 23 * hash + Objects.hashCode(this.bannerCollection);
+        hash = 23 * hash + Objects.hashCode(this.idDestreza);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof personaje)) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        personaje other = (personaje) object;
-        if ((this.idPersonaje == null && other.idPersonaje != null) || (this.idPersonaje != null && !this.idPersonaje.equals(other.idPersonaje))) {
+        if (getClass() != obj.getClass()) {
             return false;
         }
-        return true;
+        final personaje other = (personaje) obj;
+        if (this.salud != other.salud) {
+            return false;
+        }
+        if (this.nivel != other.nivel) {
+            return false;
+        }
+        if (this.danioFisico != other.danioFisico) {
+            return false;
+        }
+        if (this.danioEnergia != other.danioEnergia) {
+            return false;
+        }
+        if (this.defensaFisico != other.defensaFisico) {
+            return false;
+        }
+        if (this.defensaEnergia != other.defensaEnergia) {
+            return false;
+        }
+        if (this.critico != other.critico) {
+            return false;
+        }
+        if (this.soul != other.soul) {
+            return false;
+        }
+        if (this.estrellas != other.estrellas) {
+            return false;
+        }
+        if (!Objects.equals(this.nombre, other.nombre)) {
+            return false;
+        }
+        if (!Objects.equals(this.titulo, other.titulo)) {
+            return false;
+        }
+        if (!Objects.equals(this.tipo, other.tipo)) {
+            return false;
+        }
+        if (!Objects.equals(this.idPersonaje, other.idPersonaje)) {
+            return false;
+        }
+        if (!Objects.equals(this.bannerCollection, other.bannerCollection)) {
+            return false;
+        }
+        return Objects.equals(this.idDestreza, other.idDestreza);
     }
 
     @Override
     public String toString() {
-        return "com.ceep.dominio.Personaje_1[ idPersonaje=" + idPersonaje + " ]";
+        return "personaje{" + "idPersonaje=" + idPersonaje + ", nombre=" + nombre + ", titulo=" + titulo + ", tipo=" + tipo + ", salud=" + salud + ", nivel=" + nivel + ", danioFisico=" + danioFisico + ", danioEnergia=" + danioEnergia + ", defensaFisico=" + defensaFisico + ", defensaEnergia=" + defensaEnergia + ", critico=" + critico + ", soul=" + soul + ", estrellas=" + estrellas + ", bannerCollection=" + bannerCollection + ", idDestreza=" + idDestreza + '}';
     }
     
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 }

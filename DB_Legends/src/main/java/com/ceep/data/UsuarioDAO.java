@@ -9,6 +9,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 
 /**
  *
@@ -44,8 +45,9 @@ public class UsuarioDAO implements IUsuarioDAO {
         em.persist(usuario);
     }
 
+    @Transactional
     @Override
-    public void actualizarUsuario(usuario usuario) {
+    public void updateUser(usuario usuario) {
         em.merge(usuario);
     }
 

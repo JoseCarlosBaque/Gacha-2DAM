@@ -20,7 +20,7 @@ public interface IUsuarioDAO {
     
     public void insertarUsuario(usuario usuario);
     
-    public void actualizarUsuario(usuario usuario);
+    public void updateUser(usuario usuario);
     
     public void borrarUsuario(usuario usuario);
 }

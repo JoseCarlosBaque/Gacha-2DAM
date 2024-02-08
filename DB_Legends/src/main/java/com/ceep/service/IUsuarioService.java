@@ -18,7 +18,7 @@ public interface IUsuarioService {
     
     public void insertarUsuario(usuario usuario);
     
-    public void actualizarUsuario (usuario usuario);
+    public void actualizarUsuario(usuario usuario);
     
     public void borrarUsuario(usuario usuario);
 }

@@ -4,8 +4,13 @@
  */
 package com.ceep.dominio;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -64,6 +69,14 @@ public class banner implements Serializable {
     @Size(min = 1, max = 200)
     @Column(name = "descripcion")
     private String descripcion;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "lista")
+    private byte[] lista;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "foto")
+    private String foto;
     @ManyToMany(mappedBy = "bannerCollection")
     private Collection<item> itemCollection;
     @ManyToMany(mappedBy = "bannerCollection")
@@ -90,6 +103,36 @@ public class banner implements Serializable {
         this.probEx = probEx;
         this.probHero = probHero;
         this.descripcion = descripcion;
+    }
+
+    public banner(String nombre, int precio, int step, int probNuevo, int probSp, int probEx, int probHero, String descripcion, byte[] lista, String foto, int idBanner) {
+        this.nombre = nombre;
+        this.precio = precio;
+        this.step = step;
+        this.probNuevo = probNuevo;
+        this.probSp = probSp;
+        this.probEx = probEx;
+        this.probHero = probHero;
+        this.descripcion = descripcion;
+        this.lista = lista;
+        this.foto = foto;
+        this.idBanner = idBanner;
+    }
+
+    public banner(String nombre, int precio, int step, int probNuevo, int probSp, int probEx, int probHero, String descripcion, byte[] lista, String foto, Collection<item> itemCollection, Collection<personaje> personajeCollection, int idBanner) {
+        this.nombre = nombre;
+        this.precio = precio;
+        this.step = step;
+        this.probNuevo = probNuevo;
+        this.probSp = probSp;
+        this.probEx = probEx;
+        this.probHero = probHero;
+        this.descripcion = descripcion;
+        this.lista = lista;
+        this.foto = foto;
+        this.itemCollection = itemCollection;
+        this.personajeCollection = personajeCollection;
+        this.idBanner = idBanner;
     }
 
     public String getNombre() {
@@ -156,6 +199,22 @@ public class banner implements Serializable {
         this.descripcion = descripcion;
     }
 
+    public byte[] getLista() {
+        return lista;
+    }
+
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
+    }
+
+    public void setLista(byte[] lista) {
+        this.lista = lista;
+    }
+
     public int getIdBanner() {
         return idBanner;
     }
@@ -180,6 +239,13 @@ public class banner implements Serializable {
 
     public void setPersonajeCollection(Collection<personaje> personajeCollection) {
         this.personajeCollection = personajeCollection;
+    }
+
+    public List<personaje> deserializar(byte[] cod) throws ClassNotFoundException, IOException {
+        ByteArrayInputStream bis = new ByteArrayInputStream(cod);
+        ObjectInput in = new ObjectInputStream(bis);
+        List<personaje> lista_banner = (List<personaje>) in.readObject();
+        return lista_banner;
     }
 
     @Override

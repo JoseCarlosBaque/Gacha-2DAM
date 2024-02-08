@@ -62,9 +62,6 @@ public class UsuarioServlet extends HttpServlet {
 //        out.print("</body>");
 //        out.print("</html>");
 //        out.close();
-        HttpSession misession = request.getSession(true);
-        usuario usuario = new usuario("CHAK_JOSETE", "1234", 5);
-        misession.setAttribute("Usuario", usuario);
 //        PrintWriter pw = response.getWriter();
 //        usuario miproducto = (usuario) misession.getAttribute("Usuario");
 //        pw.println("<html><body>" + usuario.getUsuario()+ "," + usuario.getClave()+ "</body></html>");
