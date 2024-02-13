@@ -20,11 +20,11 @@
         <div class="container-fluid">
             <div class="container navbar-nav">
                 <a class="navbar-item" href="index.jsp">
-                    <img src="img/Login.png" alt="Dragon Ball Legends" width="30" height="24">
+                    <img src="img/Login.png" alt="Dragon Ball Legends" width="60" height="auto">
                 </a>
             </div>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
+                <ul class="navbar-nav d-flex justify-content-center align-items-center ms-5">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Menu
@@ -45,10 +45,7 @@
                         <a class="nav-link" href="/DB_Legends/evento?llenar=true">Eventos</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Tienda</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Sobre Nosotros</a>
+                        <a class="nav-link" href="/DB_Legends/tienda?llenar=true">Tienda</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="login.jsp?cerrar=true">Cerrar Sesion</a>

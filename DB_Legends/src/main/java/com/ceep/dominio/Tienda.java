@@ -5,9 +5,7 @@
 package com.ceep.dominio;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Objects;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -20,7 +18,7 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name="Tienda.fineAll", query="SELECT p FROM tienda p")
+    @NamedQuery(name="Tienda.findAll", query="SELECT p FROM tienda p")
 })
 @Table(name="tienda")
 public class tienda implements Serializable {

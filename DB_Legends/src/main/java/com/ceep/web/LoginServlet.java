@@ -63,7 +63,8 @@ public class LoginServlet extends HttpServlet {
                     sesion.setAttribute("id_usuario", usuario.getIdUsuario());
                     sesion.setAttribute("usuario", user);
                     sesion.setAttribute("clave", clave);
-                    sesion.setAttribute("nivel", usuario.getClave());
+                    sesion.setAttribute("nivel", usuario.getNivel());
+                    sesion.setAttribute("experiencia", usuario.getExperiencia());
                     sesion.setAttribute("equipo", usuario.getListaPersonajes());
                     sesion.setAttribute("misItems", usuario.getListaItems());
                     sesion.setAttribute("user", usuario);

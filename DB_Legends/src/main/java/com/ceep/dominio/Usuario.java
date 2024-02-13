@@ -50,6 +50,8 @@ public class usuario implements Serializable {
     private String clave;
     @Column(name = "nivel")
     private Integer nivel;
+    @Column(name = "experiencia")
+    private Integer experiencia;
     @Column(name = "lista_personajes")
     private byte[] listaPersonajes;
     @Column(name = "lista_items")
@@ -77,11 +79,21 @@ public class usuario implements Serializable {
         this.nivel = nivel;
     }
 
-    public usuario(Integer idUsuario, String usuario, String clave, Integer nivel, byte[] listaPersonajes, byte[] listaItems) {
+    public usuario(String usuario, String clave, Integer nivel, Integer experiecia, byte[] listaPersonajes, byte[] listaItems) {
+        this.usuario = usuario;
+        this.clave = clave;
+        this.nivel = nivel;
+        this.experiencia = experiecia;
+        this.listaPersonajes = listaPersonajes;
+        this.listaItems = listaItems;
+    }
+
+    public usuario(Integer idUsuario, String usuario, String clave, Integer nivel, Integer experiecia, byte[] listaPersonajes, byte[] listaItems) {
         this.idUsuario = idUsuario;
         this.usuario = usuario;
         this.clave = clave;
         this.nivel = nivel;
+        this.experiencia = experiecia;
         this.listaPersonajes = listaPersonajes;
         this.listaItems = listaItems;
     }
@@ -126,6 +138,14 @@ public class usuario implements Serializable {
 
     public void setNivel(Integer nivel) {
         this.nivel = nivel;
+    }
+
+    public Integer getExperiencia() {
+        return experiencia;
+    }
+
+    public void setExperiencia(Integer experiencia) {
+        this.experiencia = experiencia;
     }
 
     public byte[] getListaPersonajes() {
@@ -204,14 +224,15 @@ public class usuario implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 67 * hash + Objects.hashCode(this.idUsuario);
-        hash = 67 * hash + Objects.hashCode(this.usuario);
-        hash = 67 * hash + Objects.hashCode(this.clave);
-        hash = 67 * hash + Objects.hashCode(this.nivel);
-        hash = 67 * hash + Arrays.hashCode(this.listaPersonajes);
-        hash = 67 * hash + Arrays.hashCode(this.listaItems);
-        hash = 67 * hash + Objects.hashCode(this.progresoCollection);
+        int hash = 3;
+        hash = 53 * hash + Objects.hashCode(this.idUsuario);
+        hash = 53 * hash + Objects.hashCode(this.usuario);
+        hash = 53 * hash + Objects.hashCode(this.clave);
+        hash = 53 * hash + Objects.hashCode(this.nivel);
+        hash = 53 * hash + Objects.hashCode(this.experiencia);
+        hash = 53 * hash + Arrays.hashCode(this.listaPersonajes);
+        hash = 53 * hash + Arrays.hashCode(this.listaItems);
+        hash = 53 * hash + Objects.hashCode(this.progresoCollection);
         return hash;
     }
 
@@ -239,6 +260,9 @@ public class usuario implements Serializable {
         if (!Objects.equals(this.nivel, other.nivel)) {
             return false;
         }
+        if (!Objects.equals(this.experiencia, other.experiencia)) {
+            return false;
+        }
         if (!Arrays.equals(this.listaPersonajes, other.listaPersonajes)) {
             return false;
         }
@@ -250,6 +274,7 @@ public class usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "usuario{" + "idUsuario=" + idUsuario + ", usuario=" + usuario + ", clave=" + clave + ", nivel=" + nivel + ", listaPersonajes=" + listaPersonajes + ", listaItems=" + listaItems + ", progresoCollection=" + progresoCollection + '}';
+        return "usuario{" + "idUsuario=" + idUsuario + ", usuario=" + usuario + ", clave=" + clave + ", nivel=" + nivel + ", experiencia=" + experiencia + ", listaPersonajes=" + listaPersonajes + ", listaItems=" + listaItems + ", progresoCollection=" + progresoCollection + '}';
     }
+   
 }

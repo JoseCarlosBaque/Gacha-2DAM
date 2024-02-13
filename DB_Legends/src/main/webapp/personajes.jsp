@@ -23,7 +23,7 @@
             byte[] array = (byte[]) session.getAttribute("equipo");
             List<personaje> equipo_pj = (List<personaje>) user.deserializar_pjs(array);
             List<personaje> personajes = (List<personaje>) session.getAttribute("personajes");
-            boolean color = false;
+            boolean encontrado = false;
         %>
         <h1 class="col-sm-6 col-md-5 p-4 mx-auto d-flex justify-content-center align-items-center">Lista de Todos Los Personajes</h1>
         <div class="container">
@@ -45,16 +45,16 @@
                 </thead>
                 <tbody>
                     <% for (int i = 0; i < personajes.size(); i++) {
-                            color = false;
+                            encontrado = false;
                             for (int j = 0; j < equipo_pj.size(); j++) {
                                 if (Objects.equals(equipo_pj.get(j).getIdPersonaje(), personajes.get(i).getIdPersonaje())) {
-                                    color = true;
+                                    encontrado = true;
                                     break;
                                 }
                             }
                     %>
                     <tr>
-                        <% if (color) {%>
+                        <% if (encontrado) {%>
                         <td class="text-center" style="color:black"><%= personajes.get(i).getIdPersonaje()%></td>
                         <td class="text-center" style="color:black"><%= personajes.get(i).getNombre()%></td>
                         <td class="text-center" style="color:black"><%= personajes.get(i).getTitulo()%></td>
@@ -84,5 +84,6 @@
                 </tbody>
             </table>
         </div>
+        <%@ include file="footer.jsp" %>
     </body>
 </html>

@@ -34,7 +34,7 @@
         <h1 class="col-sm-6 col-md-5 p-4 mx-auto d-flex justify-content-center align-items-center"><%= eventos.get(index).getNombre()%></h1>
         <div class="container col-sm-6 col-md-5 p-4 mx-auto d-flex justify-content-center align-items-center flex-wrap flex-row position-relative">
             <img src="<%= eventos.get(index).getFoto()%>" alt="alt" class="img-fluid d-block mx-auto"/>
-            <button style="color: black;" type="button" class="position-absolute top-100 end-70 m-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            <button style="color: black;" type="button" class="position-relative top-100 end-70 m-5" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                 JUGAR
                 <div id="clip">
                     <div id="leftTop" class="corner"></div>
@@ -50,14 +50,13 @@
             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h2 class="modal-title fs-5" id="staticBackdropLabel">Lista de Personajes</h2>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <h2 class="modal-title fs-5" id="staticBackdropLabel">Nivel</h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="location.reload();"></button>
                     </div>
                     <div class="modal-body">
                         <div class="container">
                             <p class="d-none" id="health"><%= salud%></p>
                             <div  class="progress" role="progressbar" aria-label="Success example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                <% String width = eventos.get(index).calcular_porcentaje(salud);%>
                                 <div class="progress-bar bg-success" id="healthPercentage" style="width: 100%"><label id="healthPercentage">100%</label></div>
                             </div>
                         </div>
@@ -87,16 +86,20 @@
                             var saButton = document.getElementById("saButton");
                             // Agregar manejadores de eventos a los botones
                             strikeButton.onclick = function () {
-                                restarVida(1000); // Restar 20 de vida al hacer clic en el botón de Strike
+                                restarVida(1400); // Restar 20 de vida al hacer clic en el botón de Strike
+                                fin();
                             };
                             blastButton.onclick = function () {
                                 restarVida(1500); // Restar 20 de vida al hacer clic en el botón de Blast
+                                fin();
                             };
                             greenButton.onclick = function () {
                                 restarVida(0); // Restar 20 de vida al hacer clic en el botón de Green
+                                fin();
                             };
                             saButton.onclick = function () {
                                 restarVida(5000); // Restar 20 de vida al hacer clic en el botón de SA
+                                fin();
                             };
                             // Función para restar vida
                             function restarVida(cantidad) {
@@ -115,51 +118,31 @@
                             function calcularPorcentaje(vida) {
                                 var porcentaje = (vida / 40000) * 100;
                                 var porcentajeFormateado = porcentaje.toFixed(2); // Redondeamos el resultado a dos decimales
-                                if (porcentajeFormateado < 0) {
-                                    porcentajeFormateado = 0; // Si es menor que cero, establecer el porcentaje en cero
+                                if (vida <= 0) {
+                                    return '0%';
                                 } else if (porcentajeFormateado.endsWith('.00')) {
                                     return parseInt(porcentajeFormateado) + '%'; // Mostrar solo el número entero si los decimales son .00
                                 } else {
                                     return porcentajeFormateado + '%'; // Mostrar el porcentaje con dos decimales si no termina con .00
                                 }
                             }
-                        </script>
-<!--                        <script>
-                            // Obtener la vida actual del elemento HTML
-                            var vidaActual = parseInt(document.getElementById("health").textContent);
-                            if (vidaActual <= 0) {
-                                // Crear un objeto FormData para enviar datos al servidor
-                                var formData = new FormData();
-                                formData.append('vidaActual', vidaActual);
-                                // Realizar una solicitud Ajax utilizando Fetch API
-                                fetch('/nivelServlet', {
-                                    method: 'POST',
-                                    body: formData
-                                })
-                                        .then(response => {
-                                            if (!response.ok) {
-                                                throw new Error('Error al actualizar la vida');
-                                            }
-                                            return response.text(); // Si el servidor devuelve una respuesta
-                                        })
-                                        .then(data => {
-                                            console.log('Vida actualizada correctamente:', data);
-                                        })
-                                        .catch(error => {
-                                            console.error('Error al realizar la solicitud:', error);
-                                        });
+                            function fin() {
+                                var vida = parseInt(document.getElementById("health").textContent);
+                                var boton = document.getElementById("footer");
+                                if (vida <= 0) {
+                                    boton.style.display = "block";
+                                }
                             }
-                        </script>-->
+                        </script>
                     </div>
-                    <div class="modal-footer">
+                    <div class="modal-footer" id="footer" style="display: none;">
                         <form action="/DB_Legends/nivelServlet">
-                            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-primary" style="float: right" data-bs-dismiss="modal">Cerrar</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-</body>
+        <%@ include file="footer.jsp" %>
+    </body>
 </html>

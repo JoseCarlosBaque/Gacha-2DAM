@@ -43,16 +43,19 @@ public class NivelServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession sesion = request.getSession();
         usuario user = (usuario) sesion.getAttribute("user");
-//        int vidaActual = Integer.parseInt(request.getParameter("vidaActual"));
-//        sesion.setAttribute("max_health", vidaActual);
-//        response.sendRedirect("evento.jps?hola=true");
         byte[] bItems = (byte[]) sesion.getAttribute("misItems");
         List<item> items = (List<item>) user.deserializar_items(bItems);
         if (items.get(0).getTipo().equals("Dragon Stone")) {
             items.get(0).setCantidad(items.get(0).getCantidad() + 1);
+            items.get(1).setCantidad(items.get(1).getCantidad() + 1);
+            items.get(2).setCantidad(items.get(2).getCantidad() + 1);
+            user.setExperiencia(user.getExperiencia() + 100);
+            user.setNivel(user.getExperiencia() / 1000);
             byte[] actualizar = user.serializar_items(items);
             user.setListaItems(actualizar);
             usuarioService.actualizarUsuario(user);
+            sesion.setAttribute("nivel", user.getNivel());
+            sesion.setAttribute("experiencia", user.getExperiencia());
             sesion.setAttribute("user", user);
             sesion.setAttribute("misItems", actualizar);
             response.sendRedirect("eventos.jsp?ds=ganaste");

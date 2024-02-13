@@ -41,12 +41,13 @@
             session.setAttribute("personajes", lista_banner);
             byte[] misItems = (byte[]) sesion.getAttribute("misItems");
             List<item> ds = (List<item>) user.deserializar_items(misItems);
+            List<Integer> multi = new ArrayList<Integer>();
         %>
         <h1 class="col-sm-6 col-md-5 p-4 mx-auto d-flex justify-content-center align-items-center"><%= lista.get(index).getNombre()%></h1>
         <div class="container col-sm-6 col-md-5 p-4 mx-auto d-flex justify-content-center align-items-center flex-wrap flex-row position-relative">
-            <div class="contenedor">
+            <div class="container">
                 <img src="<%= lista.get(index).getFoto()%>" alt="alt" class="img-fluid d-block mx-auto"/>
-                <div class="tooltip-container position-absolute top-0">
+                <div class="tooltip-container top-0 start-0">
                     <span class="tooltip">Dragon Stone</span>
                     <span class="text"><img src="img/ds.png" alt="Dragon Stone" class="img-fluid d-block mx-auto small-image"/></span>
                     <span><%= ds.get(0).getNombre()%> || <%=  ds.get(0).getCantidad()%></span>
@@ -55,24 +56,26 @@
                 <button type="button" class="btn btn-primary position-absolute top-0 end-0 m-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="openModal('personajes')">
                     Lista de Personajes
                 </button>
-                <% if (ds.get(0).getCantidad() >= 1) { %>
-                <button type="button" class="btn btn-primary position-absolute top-100 end-50 m-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="openModal('single')">
-                    Invocacion x1
-                </button>
-                <% } else { %>
-                <button type="button" class="btn btn-primary position-absolute top-100 end-50 m-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="openModal('single')" disabled>
-                    Invocacion x1
-                </button>
-                <% } %>
-                <% if (ds.get(0).getCantidad() >= 50) { %>
-                <button type="button" class="btn btn-primary position-absolute top-100 start-50 m-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="openModal('multi')">
-                    Invocacion Multiple X50
-                </button>
-                <% } else { %>
-                <button type="button" class="btn btn-primary position-absolute top-100 start-50 m-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="openModal('multi')" disabled>
-                    Invocacion Multiple X50
-                </button>
-                <% } %>
+                <div class="container d-flex justify-content-center align-items-center">
+                    <% if (ds.get(0).getCantidad() >= 5) { %>
+                    <button type="button" class="btn btn-primary top-100 end-50 m-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="openModal('single')">
+                        Invocacion x5
+                    </button>
+                    <% } else { %>
+                    <button type="button" class="btn btn-primary top-100 end-50 m-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="openModal('single')" disabled>
+                        Invocacion x5
+                    </button>
+                    <% } %>
+                    <% if (ds.get(0).getCantidad() >= 50) { %>
+                    <button type="button" class="btn btn-primary  top-100 start-50 m-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="openModal('multi')">
+                        Invocacion Multiple X50
+                    </button>
+                    <% } else { %>
+                    <button type="button" class="btn btn-primary top-100 start-50 m-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="openModal('multi')" disabled>
+                        Invocacion Multiple X50
+                    </button>
+                    <% } %>
+                </div>
             </div>
             <!-- Lista Personajes -->
             <div id="personajes" class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -99,7 +102,9 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h2 class="modal-title fs-5" id="staticBackdropLabel">Lista de Personajes</h2>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="location.reload();"></button>
+                            <form action="/DB_Legends/tiradaSingle">
+                                <button type="submit" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </form>
                         </div>
                         <div class="modal-body">
                             <%
@@ -109,7 +114,7 @@
                             <p><%= lista_banner.get(x).getTipo()%> || <%= lista_banner.get(x).getNombre()%></p>
                         </div>
                         <div class="modal-footer">
-                            <form action="/DB_Legends/tiradas">
+                            <form action="/DB_Legends/tiradaSingle">
                                 <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
                             </form>
                         </div>
@@ -122,69 +127,31 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h2 class="modal-title fs-5" id="staticBackdropLabel">Lista de Personajes</h2>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="location.reload();"></button>
+                            <form action="/DB_Legends/tiradasMulti">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </form>
                         </div>
                         <div class="modal-body">
                             <%
-//                                if (ds.get(0).getCantidad() >= 50) {
-//                                    for (int i = 0; i < 10; i++) {
-//                                        x = (int) (Math.floor(Math.random() * (lista_banner.size())));
-//                                        ds.get(0).setCantidad(ds.get(0).getCantidad() - 50);
-//                                        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-//                                            try (ObjectOutput es = new ObjectOutputStream(bos)) {
-//                                                es.writeObject(ds);
-//                                                byte[] serializedArray = bos.toByteArray();
-//                                                session.setAttribute("misItems", serializedArray);
-//                                            } catch (IOException e) {
-//                                                e.printStackTrace();
-//                                            }
-%>
-                            <p><%= lista_banner.get(x).getTipo()%> || <%= lista_banner.get(x).getNombre()%></p>
+                                for (int i = 0; i < 10; i++) {
+                                    Integer y = (int) (Math.floor(Math.random() * (lista_banner.size())));
+                                    multi.add(y);
+                            %>
+                            <p><%= lista_banner.get(y).getTipo()%> || <%= lista_banner.get(y).getNombre()%></p>
                             <%
-//                                    for (int j = 0; j < 10; j++) {
-//                                        if (pjs.get(j).getNombre().equals(lista_banner.get(x).getNombre())) {
-//                                            if (pjs.get(i).getTipo().equals("HE")) {
-//                                                pjs.get(i).setSoul(pjs.get(i).getSoul() + 100);
-//                                            } else if (pjs.get(i).getTipo().equals("EX")) {
-//                                                pjs.get(i).setSoul(pjs.get(i).getSoul() + 300);
-//                                            } else if (pjs.get(i).getTipo().equals("SP")) {
-//                                                pjs.get(i).setSoul(pjs.get(i).getSoul() + 600);
-//                                            }
-//                                            bos = new ByteArrayOutputStream();
-//                                            try (ObjectOutput es = new ObjectOutputStream(bos)) {
-//                                                es.writeObject(pjs);
-//                                                byte[] serializedArray = bos.toByteArray();
-//                                                session.setAttribute("equipo", serializedArray);
-//                                            } catch (IOException e) {
-//                                                e.printStackTrace();
-//                                            }
-//                                        } else {
-//                                            personaje newPj = (personaje) lista_banner.get(x).clone();
-//                                            pjs.add(newPj);
-//                                            bos = new ByteArrayOutputStream();
-//                                            try (ObjectOutput es = new ObjectOutputStream(bos)) {
-//                                                es.writeObject(pjs);
-//                                                byte[] serializedArray = bos.toByteArray();
-//                                                session.setAttribute("equipo", serializedArray);
-//                                            } catch (IOException e) {
-//                                                e.printStackTrace();
-//                                            }
-//                                        }
-//                                    }
-//                                }
-//                            } else {%>
-                            <!--<p>No tienes suficientes Dragon Stone-->
-                            <%
-//                                }%>
+                                }
+                                session.setAttribute("multi", multi);
+                            %>
                         </div>
                         <div class="modal-footer">
-                            <!--<form action="/DB_Legends/tiradas">-->
-                            <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
-                            <!--</form>-->
+                            <form action="/DB_Legends/tiradasMulti">
+                                <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </body>
+    <%@ include file="footer.jsp" %>
 </html>

@@ -31,7 +31,10 @@
 
         <% if (mensaje != null && !mensaje.isEmpty()) {%>
         <div class="alert alert-success" role="alert" id="alerta">
-            Has ganado 1 <%= items.get(0).getTipo()%>
+            <p>Has ganado 1 <%= items.get(0).getTipo()%></p>
+            <p>Has ganado 1 <%= items.get(1).getTipo()%></p>
+            <p>Has ganado 1 <%= items.get(2).getTipo()%></p>
+            <p>Has ganado 100 de XP</p>
         </div>
         <% }%>
         <script>
@@ -81,5 +84,6 @@
                 </section>
             </div>
         </div>
+        <%@ include file="footer.jsp" %>
     </body>
 </html>
