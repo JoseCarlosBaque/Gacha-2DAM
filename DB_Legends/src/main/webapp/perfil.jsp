@@ -42,8 +42,7 @@
                         <label>Personajes Obtenidos:</label>
                         <label><%= pjs.size()%></label>
                         <%for (int i = 0; i < items.size(); i++) {%>
-                        <label><%= items.get(i).getNombre()%>:</label>
-                        <label><%= items.get(i).getCantidad()%></label>
+                        <label><%= items.get(i).getNombre()%>: <%= items.get(i).getCantidad()%></label>
                         <%}%>
                     </div>
                 </div>
