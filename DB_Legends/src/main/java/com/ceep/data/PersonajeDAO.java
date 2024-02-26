@@ -8,18 +8,20 @@ import com.ceep.dominio.personaje;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 /**
  *
  * @author joseb
  */
 @Stateless
-public class PersonajeDAO implements IPersonajeDAO{
+public class PersonajeDAO implements IPersonajeDAO {
 
     @PersistenceContext(unitName = "DBL_PU")
     EntityManager em;
-    
+
     @Override
     public List<personaje> findAllPersonaje() {
         return em.createNamedQuery("Personaje.findAll").getResultList();
@@ -37,7 +39,7 @@ public class PersonajeDAO implements IPersonajeDAO{
 
     @Override
     public void actualizarPersonaje(personaje personaje) {
-     em.merge(personaje);
+        em.merge(personaje);
     }
 
     @Override
@@ -45,6 +47,15 @@ public class PersonajeDAO implements IPersonajeDAO{
         em.remove(em.merge(personaje));
     }
 
-    
-    
+    @Override
+    public List<personaje> findPersonajeName(String nombre) {
+        try {
+            TypedQuery<personaje> query = em.createNamedQuery("Personaje.findByName", personaje.class);
+            query.setParameter("nombre", "%" + nombre + "%"); // Utilizamos % para hacer una búsqueda que coincida parcialmente con el nombre
+            return query.getResultList();
+        } catch (NoResultException e) {
+            return null; // Manejo de caso en que no se encuentre ningún resultado
+        }
+    }
+
 }

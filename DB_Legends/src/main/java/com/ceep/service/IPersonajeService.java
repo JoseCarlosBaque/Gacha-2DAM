@@ -16,6 +16,8 @@ public interface IPersonajeService {
     
     public personaje findPersonajeId(personaje personaje);
     
+    public List<personaje> findPersonajeNombre(String nombre);
+    
     public void insertarPersonaje(personaje personaje);
     
     public void actualizarPersonaje(personaje personaje);

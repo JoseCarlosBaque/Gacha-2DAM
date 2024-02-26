@@ -16,6 +16,8 @@ public interface IPersonajeDAO {
     
     public personaje findPersonajeId(personaje personaje);
     
+    public List<personaje> findPersonajeName(String nombre);
+    
     public void insertarPersonaje(personaje personaje);
     
     public void actualizarPersonaje(personaje personaje);

@@ -25,6 +25,12 @@
             List<personaje> personajes = (List<personaje>) session.getAttribute("personajes");
             boolean encontrado = false;
         %>
+        <div class="container mt-4">
+            <form class="d-flex" action="/DB_Legends/BuscarPjServlet">
+                <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Buscar" name="buscar">
+                <button class="btn btn-outline-success" type="submit">Buscar</button>
+            </form>
+        </div>
         <h1 class="col-sm-6 col-md-5 p-4 mx-auto d-flex justify-content-center align-items-center">Lista de Todos Los Personajes</h1>
         <div class="container">
             <table class="table">

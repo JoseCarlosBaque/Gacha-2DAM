@@ -42,5 +42,10 @@ public class PersonajeService implements IPersonajeService{
     public void borrarPersonaje(personaje personaje) {
         personajeDao.borrarPersonaje(personaje);
     }
+
+    @Override
+    public List<personaje> findPersonajeNombre(String nombre) {
+        return personajeDao.findPersonajeName(nombre);
+    }
     
 }

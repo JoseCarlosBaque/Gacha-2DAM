@@ -30,7 +30,8 @@ import javax.xml.bind.annotation.XmlTransient;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "Personaje.findAll", query = "SELECT p FROM personaje p")
+    @NamedQuery(name = "Personaje.findAll", query = "SELECT p FROM personaje p"),
+    @NamedQuery(name = "Personaje.findByName", query = "SELECT p FROM personaje p WHERE p.nombre LIKE :nombre")
 //    @NamedQuery(name = "personaje.findByIdPersonaje", query = "SELECT p FROM personaje p WHERE p.id_Personaje = :id_Personaje"),
 //    @NamedQuery(name = "personaje.findByNombre", query = "SELECT p FROM personaje p WHERE p.nombre = :nombre"),
 //    @NamedQuery(name = "personaje.findByTitulo", query = "SELECT p FROM personaje p WHERE p.titulo = :titulo"),
