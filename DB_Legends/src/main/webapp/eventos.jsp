@@ -46,44 +46,48 @@
                 }
             }, 3000); // 1000 milisegundos = 1 segundos
         </script>
-        <h1 class="col-sm-6 col-md-5 p-4 mx-auto d-flex justify-content-center align-items-center">Juega para Descubrir la historia de Dragon Ball Legends</h1>
-        <div class="container col-sm-6 col-md-5 p-4 mx-auto d-flex justify-content-center align-items-center flex-wrap flex-row">
-            <div class="contenedor">
-                <section id="card1" class="card">
-                    <path><img src="<%= lista.get(0).getFoto()%>" alt="alt" class="img-fluid d-block mx-auto"/></path>
-                    <div class="card__content">
-                        <p class="card__title"><%= lista.get(0).getNombre()%></p>
-                        <p class="card__description">
-                            <%= lista.get(0).getDescripcion()%>
-                        </p>
-                        <a href="evento.jsp?id=0" style="text-decoration: none; color: black;">Jugar</a>
-                </section>
-            </div>
-            <div class="contenedor">
-                <section id="card1" class="card">
-                    <path><img src="<%= lista.get(1).getFoto()%>" alt="alt" class="img-fluid d-block mx-auto"/></path>
-                    <div class="card__content">
-                        <p class="card__title"><%= lista.get(1).getNombre()%></p>
-                        <p class="card__description">
-                            <%= lista.get(1).getDescripcion()%>
-                        </p> 
-                        <a href="evento.jsp?id=1" style="text-decoration: none; color: black">Jugar</a>
+        <div class="wrapper" style="display: flex; flex-direction: column; min-height: 100vh;">
+            <div class="main" style="flex: 1">
+                <h1 class="col-sm-6 col-md-5 p-4 mx-auto d-flex justify-content-center align-items-center">Juega para Descubrir la historia de Dragon Ball Legends</h1>
+                <div class="container col-sm-6 col-md-5 p-4 mx-auto d-flex justify-content-center align-items-center flex-wrap flex-row">
+                    <div class="contenedor">
+                        <section id="card1" class="card">
+                            <path><img src="<%= lista.get(0).getFoto()%>" alt="alt" class="img-fluid d-block mx-auto"/></path>
+                            <div class="card__content">
+                                <p class="card__title"><%= lista.get(0).getNombre()%></p>
+                                <p class="card__description">
+                                    <%= lista.get(0).getDescripcion()%>
+                                </p>
+                                <a href="evento.jsp?id=0" style="text-decoration: none; color: black;">Jugar</a>
+                        </section>
                     </div>
-                </section>
-            </div>
-            <div class="contenedor">
-                <section id="card1" class="card">
-                    <path><img src="<%= lista.get(2).getFoto()%>" alt="alt" class="img-fluid d-block mx-auto"/></path>
-                    <div class="card__content">
-                        <p class="card__title"><%= lista.get(2).getNombre()%></p>
-                        <p class="card__description">
-                            <%= lista.get(2).getDescripcion()%>
-                        </p>
-                        <a href="evento.jsp?id=2" style="text-decoration: none; color: black">Jugar</a>
+                    <div class="contenedor">
+                        <section id="card1" class="card">
+                            <path><img src="<%= lista.get(1).getFoto()%>" alt="alt" class="img-fluid d-block mx-auto"/></path>
+                            <div class="card__content">
+                                <p class="card__title"><%= lista.get(1).getNombre()%></p>
+                                <p class="card__description">
+                                    <%= lista.get(1).getDescripcion()%>
+                                </p> 
+                                <a href="evento.jsp?id=1" style="text-decoration: none; color: black">Jugar</a>
+                            </div>
+                        </section>
                     </div>
-                </section>
+                    <div class="contenedor">
+                        <section id="card1" class="card">
+                            <path><img src="<%= lista.get(2).getFoto()%>" alt="alt" class="img-fluid d-block mx-auto"/></path>
+                            <div class="card__content">
+                                <p class="card__title"><%= lista.get(2).getNombre()%></p>
+                                <p class="card__description">
+                                    <%= lista.get(2).getDescripcion()%>
+                                </p>
+                                <a href="evento.jsp?id=2" style="text-decoration: none; color: black">Jugar</a>
+                            </div>
+                        </section>
+                    </div>
+                </div>
             </div>
+            <%@ include file="footer.jsp" %>
         </div>
-        <%@ include file="footer.jsp" %>
     </body>
 </html>

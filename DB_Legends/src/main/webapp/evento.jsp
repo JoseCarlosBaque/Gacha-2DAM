@@ -31,118 +31,133 @@
     <body>
         <%@ include file="navbar.jsp" %>
         <%@ include file="scripts.jsp" %>
-        <h1 class="col-sm-6 col-md-5 p-4 mx-auto d-flex justify-content-center align-items-center"><%= eventos.get(index).getNombre()%></h1>
-        <div class="container col-sm-6 col-md-5 p-4 mx-auto d-flex justify-content-center align-items-center flex-wrap flex-row position-relative">
-            <img src="<%= eventos.get(index).getFoto()%>" alt="alt" class="img-fluid d-block mx-auto"/>
-            <button style="color: black;" type="button" class="position-relative top-100 end-70 m-5" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                JUGAR
-                <div id="clip">
-                    <div id="leftTop" class="corner"></div>
-                    <div id="rightBottom" class="corner"></div>
-                    <div id="rightTop" class="corner"></div>
-                    <div id="leftBottom" class="corner"></div>
+        <style>
+            /* CSS para cambiar el color del botón de cierre a rojo */
+            .btn-close {
+                filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(180deg) brightness(200%) contrast(100%);
+            }
+
+            .btn-close:hover {
+                filter: invert(22%) sepia(96%) saturate(5824%) hue-rotate(2deg) brightness(95%) contrast(105%);
+            }
+
+        </style>
+        <div class="wrapper" style="display: flex; flex-direction: column; min-height: 100vh;">
+            <div class="main" style="flex: 1">
+                <h1 class="col-sm-6 col-md-5 p-4 mx-auto d-flex justify-content-center align-items-center"><%= eventos.get(index).getNombre()%></h1>
+                <div class="container col-sm-6 col-md-5 p-4 mx-auto d-flex justify-content-center align-items-center flex-wrap flex-row position-relative">
+                    <img src="<%= eventos.get(index).getFoto()%>" alt="alt" class="img-fluid d-block mx-auto"/>
+                    <button style="color: white;" type="button" class="position-relative top-100 end-70 m-5" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                        JUGAR
+                        <div id="clip">
+                            <div id="leftTop" class="corner"></div>
+                            <div id="rightBottom" class="corner"></div>
+                            <div id="rightTop" class="corner"></div>
+                            <div id="leftBottom" class="corner"></div>
+                        </div>
+                        <span id="rightArrow" class="arrow ms-2"></span>
+                        <span id="leftArrow" class="arrow"></span>
+                    </button>
                 </div>
-                <span id="rightArrow" class="arrow ms-2"></span>
-                <span id="leftArrow" class="arrow"></span>
-            </button>
-        </div>
-        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h2 class="modal-title fs-5" id="staticBackdropLabel">Nivel</h2>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="location.reload();"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="container">
-                            <p class="d-none" id="health"><%= salud%></p>
-                            <div  class="progress" role="progressbar" aria-label="Success example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                <div class="progress-bar bg-success" id="healthPercentage" style="width: 100%"><label id="healthPercentage">100%</label></div>
+                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                        <div class="modal-content" style="background-image: url(img/galaxia.jpg)">
+                            <div class="modal-header">
+                                <h2 class="modal-title fs-5" id="staticBackdropLabel" style="color: white">Nivel</h2>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="location.reload();"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="container">
+                                    <p class="d-none" id="health"><%= salud%></p>
+                                    <div  class="progress" role="progressbar" aria-label="Success example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                                        <div class="progress-bar bg-success" id="healthPercentage" style="width: 100%"><label id="healthPercentage">100%</label></div>
+                                    </div>
+                                </div>
+                                <div class="container mt-2">
+                                    <img src="img/Zamasu(Corrompido).jpg" class="img-fluid d-block mx-auto" alt="Zamasu(Corrompido)"/>
+                                </div>
+                                <div class="container col-sm-6 col-md-5 p-4 mx-auto d-flex justify-content-center align-items-center">
+                                    <select name="index_equipo">
+                                        <% for (int i = 0; i < pjs.size(); i++) {%>
+                                        <option value="<%= pjs.get(i).getIdPersonaje()%>"><%= pjs.get(i).getNombre()%></option>   
+                                        <%
+                                            }
+                                        %>
+                                    </select>
+                                </div>
+                                <div class="container col-sm-6 col-md-12 p-4 mx-auto d-flex justify-content-center align-items-center gap-3">
+                                    <button type="button" id="strikeButton"><img src="<%= destrezas.get(0).getFoto()%>" alt="Strike" class="img-fluid d-block mx-auto"/></button>
+                                    <button type="button" id="blastButton"><img src="<%= destrezas.get(1).getFoto()%>" alt="Blast" class="img-fluid d-block mx-auto"/></button>
+                                    <button type="button" id="greenButton"><img src="<%= destrezas.get(2).getFoto()%>" alt="Green" class="img-fluid d-block mx-auto"/></button>
+                                    <button type="button" id="saButton"><img src="<%= destrezas.get(3).getFoto()%>" alt="SA" class="img-fluid d-block mx-auto"/></button>
+                                </div>
+                                <script>
+                                    // Obtener referencias a los botones
+                                    var strikeButton = document.getElementById("strikeButton");
+                                    var blastButton = document.getElementById("blastButton");
+                                    var greenButton = document.getElementById("greenButton");
+                                    var saButton = document.getElementById("saButton");
+                                    // Agregar manejadores de eventos a los botones
+                                    strikeButton.onclick = function () {
+                                        restarVida(1400); // Restar 20 de vida al hacer clic en el botón de Strike
+                                        fin();
+                                    };
+                                    blastButton.onclick = function () {
+                                        restarVida(1500); // Restar 20 de vida al hacer clic en el botón de Blast
+                                        fin();
+                                    };
+                                    greenButton.onclick = function () {
+                                        restarVida(0); // Restar 20 de vida al hacer clic en el botón de Green
+                                        fin();
+                                    };
+                                    saButton.onclick = function () {
+                                        restarVida(5000); // Restar 20 de vida al hacer clic en el botón de SA
+                                        fin();
+                                    };
+                                    // Función para restar vida
+                                    function restarVida(cantidad) {
+                                        // Obtener la vida actual
+                                        var vida = parseInt(document.getElementById("health").textContent);
+                                        // Restar la cantidad especificada
+                                        vida -= cantidad;
+                                        // Actualizar el valor de la vida en el elemento HTML
+                                        document.getElementById("health").textContent = vida;
+                                        // Calcular y mostrar el porcentaje de vida
+                                        var porcentaje = calcularPorcentaje(vida);
+                                        document.getElementById("healthPercentage").textContent = porcentaje;
+                                        document.getElementById("healthPercentage").style.width = porcentaje;
+                                    }
+                                    // Función para calcular el porcentaje de vida
+                                    function calcularPorcentaje(vida) {
+                                        var porcentaje = (vida / 40000) * 100;
+                                        var porcentajeFormateado = porcentaje.toFixed(2); // Redondeamos el resultado a dos decimales
+                                        if (vida <= 0) {
+                                            return '0%';
+                                        } else if (porcentajeFormateado.endsWith('.00')) {
+                                            return parseInt(porcentajeFormateado) + '%'; // Mostrar solo el número entero si los decimales son .00
+                                        } else {
+                                            return porcentajeFormateado + '%'; // Mostrar el porcentaje con dos decimales si no termina con .00
+                                        }
+                                    }
+                                    function fin() {
+                                        var vida = parseInt(document.getElementById("health").textContent);
+                                        var boton = document.getElementById("footer");
+                                        if (vida <= 0) {
+                                            boton.style.display = "block";
+                                        }
+                                    }
+                                </script>
+                            </div>
+                            <div class="modal-footer" id="footer" style="display: none;">
+                                <form action="/DB_Legends/nivelServlet">
+                                    <button type="submit" class="btn btn-primary" style="float: right" data-bs-dismiss="modal">Cerrar</button>
+                                </form>
                             </div>
                         </div>
-                        <div class="container mt-2">
-                            <img src="img/Zamasu(Corrompido).jpg" class="img-fluid d-block mx-auto" alt="Zamasu(Corrompido)"/>
-                        </div>
-                        <div class="container col-sm-6 col-md-5 p-4 mx-auto d-flex justify-content-center align-items-center">
-                            <select name="index_equipo">
-                                <% for (int i = 0; i < pjs.size(); i++) {%>
-                                <option value="<%= pjs.get(i).getIdPersonaje()%>"><%= pjs.get(i).getNombre()%></option>   
-                                <%
-                                    }
-                                %>
-                            </select>
-                        </div>
-                        <div class="container col-sm-6 col-md-12 p-4 mx-auto d-flex justify-content-center align-items-center gap-3">
-                            <button type="button" id="strikeButton"><img src="<%= destrezas.get(0).getFoto()%>" alt="Strike" class="img-fluid d-block mx-auto"/></button>
-                            <button type="button" id="blastButton"><img src="<%= destrezas.get(1).getFoto()%>" alt="Blast" class="img-fluid d-block mx-auto"/></button>
-                            <button type="button" id="greenButton"><img src="<%= destrezas.get(2).getFoto()%>" alt="Green" class="img-fluid d-block mx-auto"/></button>
-                            <button type="button" id="saButton"><img src="<%= destrezas.get(3).getFoto()%>" alt="SA" class="img-fluid d-block mx-auto"/></button>
-                        </div>
-                        <script>
-                            // Obtener referencias a los botones
-                            var strikeButton = document.getElementById("strikeButton");
-                            var blastButton = document.getElementById("blastButton");
-                            var greenButton = document.getElementById("greenButton");
-                            var saButton = document.getElementById("saButton");
-                            // Agregar manejadores de eventos a los botones
-                            strikeButton.onclick = function () {
-                                restarVida(1400); // Restar 20 de vida al hacer clic en el botón de Strike
-                                fin();
-                            };
-                            blastButton.onclick = function () {
-                                restarVida(1500); // Restar 20 de vida al hacer clic en el botón de Blast
-                                fin();
-                            };
-                            greenButton.onclick = function () {
-                                restarVida(0); // Restar 20 de vida al hacer clic en el botón de Green
-                                fin();
-                            };
-                            saButton.onclick = function () {
-                                restarVida(5000); // Restar 20 de vida al hacer clic en el botón de SA
-                                fin();
-                            };
-                            // Función para restar vida
-                            function restarVida(cantidad) {
-                                // Obtener la vida actual
-                                var vida = parseInt(document.getElementById("health").textContent);
-                                // Restar la cantidad especificada
-                                vida -= cantidad;
-                                // Actualizar el valor de la vida en el elemento HTML
-                                document.getElementById("health").textContent = vida;
-                                // Calcular y mostrar el porcentaje de vida
-                                var porcentaje = calcularPorcentaje(vida);
-                                document.getElementById("healthPercentage").textContent = porcentaje;
-                                document.getElementById("healthPercentage").style.width = porcentaje;
-                            }
-                            // Función para calcular el porcentaje de vida
-                            function calcularPorcentaje(vida) {
-                                var porcentaje = (vida / 40000) * 100;
-                                var porcentajeFormateado = porcentaje.toFixed(2); // Redondeamos el resultado a dos decimales
-                                if (vida <= 0) {
-                                    return '0%';
-                                } else if (porcentajeFormateado.endsWith('.00')) {
-                                    return parseInt(porcentajeFormateado) + '%'; // Mostrar solo el número entero si los decimales son .00
-                                } else {
-                                    return porcentajeFormateado + '%'; // Mostrar el porcentaje con dos decimales si no termina con .00
-                                }
-                            }
-                            function fin() {
-                                var vida = parseInt(document.getElementById("health").textContent);
-                                var boton = document.getElementById("footer");
-                                if (vida <= 0) {
-                                    boton.style.display = "block";
-                                }
-                            }
-                        </script>
-                    </div>
-                    <div class="modal-footer" id="footer" style="display: none;">
-                        <form action="/DB_Legends/nivelServlet">
-                            <button type="submit" class="btn btn-primary" style="float: right" data-bs-dismiss="modal">Cerrar</button>
-                        </form>
                     </div>
                 </div>
             </div>
+            <%@ include file="footer.jsp" %>
         </div>
-        <%@ include file="footer.jsp" %>
     </body>
 </html>

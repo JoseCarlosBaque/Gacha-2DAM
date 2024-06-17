@@ -78,9 +78,18 @@ public class RegistrarServlet extends HttpServlet {
                     item2.setCantidad(100);
                     item item3 = (item) items.get(2).clone();
                     item3.setCantidad(100);
+                    item item4 = (item) items.get(3).clone();
+                    item4.setCantidad(5);
+                    item item5 = (item) items.get(4).clone();
+                    item5.setCantidad(5);
+                    item item6 = (item) items.get(5).clone();
+                    item6.setCantidad(5);
                     misItems.add(item1);
                     misItems.add(item2);
                     misItems.add(item3);
+                    misItems.add(item4);
+                    misItems.add(item5);
+                    misItems.add(item6);
                     ByteArrayOutputStream bos = new ByteArrayOutputStream();
                     try (ObjectOutput ot = new ObjectOutputStream(bos)) {
                         ot.writeObject(misItems);

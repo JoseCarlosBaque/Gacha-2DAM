@@ -36,17 +36,17 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th class="text-center">Id Personaje</th>
-                        <th class="text-center">Nombre</th>
-                        <th class="text-center">Titulo</th>
-                        <th class="text-center">Tipo</th>
-                        <th class="text-center">Salud</th>
-                        <th class="text-center">Daño Fisico</th>
-                        <th class="text-center">Defensa Fisica</th>
-                        <th class="text-center">Daño Energia</th>
-                        <th class="text-center">Defensa Energia</th>
-                        <th class="text-center">Soul</th>
-                        <th class="text-center">Estrellas</th>
+                        <th class="text-center" style="background-color: #5ff025">Id Personaje</th>
+                        <th class="text-center" style="background-color: #5ff025">Nombre</th>
+                        <th class="text-center" style="background-color: #5ff025">Titulo</th>
+                        <th class="text-center" style="background-color: #5ff025">Tipo</th>
+                        <th class="text-center" style="background-color: #5ff025">Salud</th>
+                        <th class="text-center" style="background-color: #5ff025">Daño Fisico</th>
+                        <th class="text-center" style="background-color: #5ff025">Defensa Fisica</th>
+                        <th class="text-center" style="background-color: #5ff025">Daño Energia</th>
+                        <th class="text-center" style="background-color: #5ff025">Defensa Energia</th>
+                        <th class="text-center" style="background-color: #5ff025">Soul</th>
+                        <th class="text-center" style="background-color: #5ff025">Estrellas</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -61,29 +61,29 @@
                     %>
                     <tr>
                         <% if (encontrado) {%>
-                        <td class="text-center" style="color:black"><%= personajes.get(i).getIdPersonaje()%></td>
-                        <td class="text-center" style="color:black"><%= personajes.get(i).getNombre()%></td>
-                        <td class="text-center" style="color:black"><%= personajes.get(i).getTitulo()%></td>
-                        <td class="text-center" style="color:black"><%= personajes.get(i).getTipo()%></td>
-                        <td class="text-center" style="color:black"><%= personajes.get(i).getSalud()%></td>
-                        <td class="text-center" style="color:black"><%= personajes.get(i).getDanioFisico()%></td>
-                        <td class="text-center" style="color:black"><%= personajes.get(i).getDefensaFisico()%></td>
-                        <td class="text-center" style="color:black"><%= personajes.get(i).getDanioEnergia()%></td>
-                        <td class="text-center" style="color:black"><%= personajes.get(i).getDefensaEnergia()%></td>
-                        <td class="text-center" style="color:black"><%= personajes.get(i).getSoul()%></td>
-                        <td class="text-center" style="color:black"><%= personajes.get(i).getEstrellas()%></td>
+                        <td class="text-center" style="background-color: #d2ff96; color:black"><%= personajes.get(i).getIdPersonaje()%></td>
+                        <td class="text-center" style="background-color: #d2ff96; color:black"><%= personajes.get(i).getNombre()%></td>
+                        <td class="text-center" style="background-color: #d2ff96; color:black"><%= personajes.get(i).getTitulo()%></td>
+                        <td class="text-center" style="background-color: #d2ff96; color:black"><%= personajes.get(i).getTipo()%></td>
+                        <td class="text-center" style="background-color: #d2ff96; color:black"><%= personajes.get(i).getSalud()%></td>
+                        <td class="text-center" style="background-color: #d2ff96; color:black"><%= personajes.get(i).getDanioFisico()%></td>
+                        <td class="text-center" style="background-color: #d2ff96; color:black"><%= personajes.get(i).getDefensaFisico()%></td>
+                        <td class="text-center" style="background-color: #d2ff96; color:black"><%= personajes.get(i).getDanioEnergia()%></td>
+                        <td class="text-center" style="background-color: #d2ff96; color:black"><%= personajes.get(i).getDefensaEnergia()%></td>
+                        <td class="text-center" style="background-color: #d2ff96; color:black"><%= personajes.get(i).getSoul()%></td>
+                        <td class="text-center" style="background-color: #d2ff96; color:black"><%= personajes.get(i).getEstrellas()%></td>
                         <% } else {%>
-                        <td class="text-center" style="color:red"><%= personajes.get(i).getIdPersonaje()%></td>
-                        <td class="text-center" style="color:red"><%= personajes.get(i).getNombre()%></td>
-                        <td class="text-center" style="color:red"><%= personajes.get(i).getTitulo()%></td>
-                        <td class="text-center" style="color:red"><%= personajes.get(i).getTipo()%></td>
-                        <td class="text-center" style="color:red"><%= personajes.get(i).getSalud()%></td>
-                        <td class="text-center" style="color:red"><%= personajes.get(i).getDanioFisico()%></td>
-                        <td class="text-center" style="color:red"><%= personajes.get(i).getDefensaFisico()%></td>
-                        <td class="text-center" style="color:red"><%= personajes.get(i).getDanioEnergia()%></td>
-                        <td class="text-center" style="color:red"><%= personajes.get(i).getDefensaEnergia()%></td>
-                        <td class="text-center" style="color:red"><%= personajes.get(i).getSoul()%></td>
-                        <td class="text-center" style="color:red"><%= personajes.get(i).getEstrellas()%></td>
+                        <td class="text-center" style="background-color: #ff745f; color:white"><%= personajes.get(i).getIdPersonaje()%></td>
+                        <td class="text-center" style="background-color: #ff745f; color:white"><%= personajes.get(i).getNombre()%></td>
+                        <td class="text-center" style="background-color: #ff745f; color:white"><%= personajes.get(i).getTitulo()%></td>
+                        <td class="text-center" style="background-color: #ff745f; color:white"><%= personajes.get(i).getTipo()%></td>
+                        <td class="text-center" style="background-color: #ff745f; color:white"><%= personajes.get(i).getSalud()%></td>
+                        <td class="text-center" style="background-color: #ff745f; color:white"><%= personajes.get(i).getDanioFisico()%></td>
+                        <td class="text-center" style="background-color: #ff745f; color:white"><%= personajes.get(i).getDefensaFisico()%></td>
+                        <td class="text-center" style="background-color: #ff745f; color:white"><%= personajes.get(i).getDanioEnergia()%></td>
+                        <td class="text-center" style="background-color: #ff745f; color:white"><%= personajes.get(i).getDefensaEnergia()%></td>
+                        <td class="text-center" style="background-color: #ff745f; color:white"><%= personajes.get(i).getSoul()%></td>
+                        <td class="text-center" style="background-color: #ff745f; color:white"><%= personajes.get(i).getEstrellas()%></td>
                         <% } %>
                     </tr>
                     <% }%>

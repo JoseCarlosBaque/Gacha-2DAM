@@ -22,32 +22,36 @@
             List<item> items = (List<item>) session.getAttribute("items");
             int index = Integer.parseInt(request.getParameter("id"));
         %>
-        <h1 class="col-sm-6 col-md-5 p-4 mx-auto d-flex justify-content-center align-items-center"><%= lista.get(index).getNombre()%></h1>
-        <div class="container">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th class="text-center">Nombre</th>
-                        <th class="text-center">Cantidad</th>
-                        <th class="text-center">Precio</th>
-                        <th class="text-center">Tipo</th>
-                        <th class="text-center">Comprar</th>
-                </thead>
-                <tbody>
-                    <% for (int i = 3; i < items.size(); i++) {%>
-                    <tr>
-                        <td class="text-center"><%= items.get(i).getNombre()%></td>
-                        <td class="text-center"><%= items.get(i).getCantidad()%></td>
-                        <td class="text-center">5</td>
-                        <td class="text-center"><%= items.get(i).getTipo()%></td>
-                        <td class="text-center">
-                            <a class="btn btn-primary" href="/DB_Legends/comprar?id=<%=index%>&idItem=<%=i%>">Comprar</a>
-                        </td>
-                    </tr>
-                    <% }%>
-                </tbody>
-            </table>
+        <div class="wrapper" style="display: flex; flex-direction: column; min-height: 100vh;">
+            <div class="main" style="flex: 1">
+                <h1 class="col-sm-6 col-md-5 p-4 mx-auto d-flex justify-content-center align-items-center"><%= lista.get(index).getNombre()%></h1>
+                <div class="container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="text-center" style="background-color:  #6600cc">Nombre</th>
+                                <th class="text-center" style="background-color:  #6600cc">Cantidad</th>
+                                <th class="text-center" style="background-color:  #6600cc">Precio</th>
+                                <th class="text-center" style="background-color:  #6600cc">Tipo</th>
+                                <th class="text-center" style="background-color:  #6600cc">Comprar</th>
+                        </thead>
+                        <tbody>
+                            <% for (int i = 3; i < items.size(); i++) {%>
+                            <tr>
+                                <td class="text-center" style="background-color: #9999ff"><%= items.get(i).getNombre()%></td>
+                                <td class="text-center" style="background-color: #9999ff"><%= items.get(i).getCantidad()%></td>
+                                <td class="text-center" style="background-color: #9999ff">5</td>
+                                <td class="text-center" style="background-color: #9999ff"><%= items.get(i).getTipo()%></td>
+                                <td class="text-center" style="background-color: #9999ff">
+                                    <a class="btn btn-primary" href="/DB_Legends/comprar?id=<%=index%>&idItem=<%=i%>">Comprar</a>
+                                </td>
+                            </tr>
+                            <% }%>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <%@ include file="footer.jsp" %>
         </div>
-                <%@ include file="footer.jsp" %>
     </body>
 </html>

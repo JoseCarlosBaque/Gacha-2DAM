@@ -56,6 +56,8 @@ public class usuario implements Serializable {
     private byte[] listaPersonajes;
     @Column(name = "lista_items")
     private byte[] listaItems;
+    @Column(name = "lista_equipos")
+    private byte[] listaEquipos;
     @OneToMany(mappedBy = "idUsuario")
     private Collection<progreso> progresoCollection;
     private static final long SerialVersionUID = 1L;
@@ -98,6 +100,17 @@ public class usuario implements Serializable {
         this.listaItems = listaItems;
     }
 
+    public usuario(Integer idUsuario, String usuario, String clave, Integer nivel, Integer experiencia, byte[] listaPersonajes, byte[] listaItems, byte[] listaEquipos) {
+        this.idUsuario = idUsuario;
+        this.usuario = usuario;
+        this.clave = clave;
+        this.nivel = nivel;
+        this.experiencia = experiencia;
+        this.listaPersonajes = listaPersonajes;
+        this.listaItems = listaItems;
+        this.listaEquipos = listaEquipos;
+    }
+
     public usuario(Integer idUsuario, String usuario, String clave, Integer nivel, byte[] listaPersonajes, byte[] listaItems, Collection<progreso> progresoCollection) {
         this.idUsuario = idUsuario;
         this.usuario = usuario;
@@ -105,6 +118,18 @@ public class usuario implements Serializable {
         this.nivel = nivel;
         this.listaPersonajes = listaPersonajes;
         this.listaItems = listaItems;
+        this.progresoCollection = progresoCollection;
+    }
+
+    public usuario(Integer idUsuario, String usuario, String clave, Integer nivel, Integer experiencia, byte[] listaPersonajes, byte[] listaItems, byte[] listaEquipos, Collection<progreso> progresoCollection) {
+        this.idUsuario = idUsuario;
+        this.usuario = usuario;
+        this.clave = clave;
+        this.nivel = nivel;
+        this.experiencia = experiencia;
+        this.listaPersonajes = listaPersonajes;
+        this.listaItems = listaItems;
+        this.listaEquipos = listaEquipos;
         this.progresoCollection = progresoCollection;
     }
 
@@ -173,6 +198,14 @@ public class usuario implements Serializable {
         this.progresoCollection = progresoCollection;
     }
 
+    public byte[] getListaEquipos() {
+        return listaEquipos;
+    }
+
+    public void setListaEquipos(byte[] listaEquipos) {
+        this.listaEquipos = listaEquipos;
+    }
+
     //Deserializamos El Array De los Personajes Del usuario
     public List<personaje> deserializar_pjs(byte[] cod) throws ClassNotFoundException, IOException {
         List<personaje> lista_banner = null;
@@ -222,6 +255,47 @@ public class usuario implements Serializable {
         return serializedArray;
     }
 
+    //Deserializamos El Array De los equipos Del usuario
+    public List<byte[]> deserializar_equipos(byte[] cod) throws ClassNotFoundException, IOException {
+        List<byte[]> lista_equipos = null;
+        try (ByteArrayInputStream bis = new ByteArrayInputStream(cod); ObjectInput in = new ObjectInputStream(bis)) {
+            lista_equipos = (List<byte[]>) in.readObject();
+            System.out.println("Deserialización exitosa. Número de equipos: " + lista_equipos.size());
+        } catch (IOException | ClassNotFoundException e) {
+            System.err.println("Error durante la deserialización: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return lista_equipos;
+    }
+
+    //Serializamos El Array De los equipos Del usuario
+    public byte[] serializar_equipos(List<byte[]> lista) throws ClassNotFoundException, IOException {
+        byte[] serializedArray = null;
+        try (ByteArrayOutputStream bos = new ByteArrayOutputStream(); ObjectOutput out = new ObjectOutputStream(bos)) {
+            out.writeObject(lista);
+            serializedArray = bos.toByteArray();
+            System.out.println("Serialización exitosa. Tamaño del array: " + serializedArray.length + " bytes");
+        } catch (IOException e) {
+            System.err.println("Error durante la serialización: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return serializedArray;
+    }
+    
+    //Serializamos El Array De los equipos Del usuario
+//    public byte[] serializar_ids(String[] lista) throws ClassNotFoundException, IOException {
+//        byte[] serializedArray = null;
+//        try (ByteArrayOutputStream bos = new ByteArrayOutputStream(); ObjectOutput out = new ObjectOutputStream(bos)) {
+//            out.writeObject(lista);
+//            serializedArray = bos.toByteArray();
+//            System.out.println("Serialización exitosa. Tamaño del array: " + serializedArray.length + " bytes");
+//        } catch (IOException e) {
+//            System.err.println("Error durante la serialización: " + e.getMessage());
+//            e.printStackTrace();
+//        }
+//        return serializedArray;
+//    }
+    
     @Override
     public int hashCode() {
         int hash = 3;

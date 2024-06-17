@@ -1,21 +1,17 @@
+package com.ceep.web;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package com.ceep.web;
-
-import com.ceep.dominio.banner;
-import com.ceep.dominio.destreza;
 import com.ceep.dominio.personaje;
 import com.ceep.dominio.usuario;
-import com.ceep.service.IBannerService;
-import com.ceep.service.IDestrezaService;
-import com.ceep.service.IPersonajeService;
 import com.ceep.service.IUsuarioService;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.inject.Inject;
@@ -30,8 +26,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author joseb
  */
-@WebServlet(name = "LoginServlet", urlPatterns = {"/login"})
-public class LoginServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/guardarEquipos"})
+public class EquipoServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,39 +39,53 @@ public class LoginServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Inject
-    IUsuarioService usuarioservice;
-    @Inject
-    IPersonajeService personajeservice;
-    @Inject
-    IDestrezaService destrezaservice;
+    IUsuarioService usuarioService;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ClassNotFoundException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession sesion = request.getSession();
-        List<usuario> usuarios = usuarioservice.listarUsuario();
-        List<personaje> personajes = personajeservice.listarPersonajes();
-        List<destreza> destrezas = destrezaservice.findAllDestreza();
-        if (request.getParameter("enviarL") != null) {
-            String user = request.getParameter("user");
-            String clave = request.getParameter("password");
-            for (usuario usuario : usuarios) {
-                if (usuario.getUsuario().equals(user) && usuario.getClave().equals(clave)) {
-                    sesion.setAttribute("id_usuario", usuario.getIdUsuario());
-                    sesion.setAttribute("usuario", user);
-                    sesion.setAttribute("clave", clave);
-                    sesion.setAttribute("nivel", usuario.getNivel());
-                    sesion.setAttribute("experiencia", usuario.getExperiencia());
-                    sesion.setAttribute("equipo", usuario.getListaPersonajes());
-                    sesion.setAttribute("misItems", usuario.getListaItems());
-                    sesion.setAttribute("equipos", usuario.getListaEquipos());
-                    sesion.setAttribute("user", usuario);
-                    sesion.setAttribute("personajes", personajes);
-                    sesion.setAttribute("destrezas", destrezas);
-                    response.sendRedirect("index.jsp");
-                    return;
-                }
+        HttpSession session = request.getSession();
+        usuario user = (usuario) session.getAttribute("user");
+        byte[] byte_pj = (byte[]) session.getAttribute("equipo");
+        List<personaje> pjs = (List<personaje>) user.deserializar_pjs(byte_pj);
+        List<personaje> equipo_pjs = new ArrayList<>();
+        List<byte[]> cod_pjs = new ArrayList<>();
+        byte[] cod_equipo = (byte[]) session.getAttribute("equipos");
+        if (cod_equipo != null) {
+            cod_pjs = (List<byte[]>) user.deserializar_equipos(cod_equipo);
+        } else {
+            cod_pjs.add(byte_pj);
+        }
+        String[] ids = request.getParameterValues("ids");
+        String[] idsSeparados = ids[0].split(",");
+        // Recorrer la lista de pjs en busca de coincidencias
+        for (int i = 0; i < idsSeparados.length; i++) {
+            for (int j = 0; j < pjs.size(); j++) {
+                if (Objects.equals(Integer.valueOf(idsSeparados[i]), pjs.get(j).getIdPersonaje())) {
+                    equipo_pjs.add(pjs.get(j));
+                    break;
+                }  
             }
-            response.sendRedirect("login.jsp?error=true");
+        }
+        //Serializamos el queipo par añadirlo a List de byte[]
+        byte[] equiposBytes = user.serializar_pjs(equipo_pjs);
+        //Si ha mas de 6 equipos se borra el ultimo y se añadel nuevo sino solo se añade el nuevo 
+        if (cod_pjs.size() == 6) {
+            cod_pjs.remove(cod_pjs.size() - 1);
+            cod_pjs.add(equiposBytes);
+            //Serializamos el List de byte[] y lo seteamos al user y a la sesion y lo guardamos en la base de datos
+            byte[] byte_equipos = user.serializar_equipos(cod_pjs);
+            user.setListaEquipos(byte_equipos);
+            session.setAttribute("equipos", byte_equipos);
+            usuarioService.actualizarUsuario(user);
+            response.sendRedirect("index.jsp");
+        } else {
+            cod_pjs.add(equiposBytes);
+            //Serializamos el List de byte[] y lo seteamos al user y a la sesion y lo guardamos en la base de datos
+            byte[] byte_equipos = user.serializar_equipos(cod_pjs);
+            user.setListaEquipos(byte_equipos);
+            session.setAttribute("equipos", byte_equipos);
+            usuarioService.actualizarUsuario(user);
+            response.sendRedirect("eventos.jsp");
         }
     }
 
@@ -94,7 +104,7 @@ public class LoginServlet extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EquipoServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -109,13 +119,11 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         try {
             processRequest(request, response);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EquipoServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     /**

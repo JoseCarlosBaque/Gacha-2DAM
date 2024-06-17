@@ -21,23 +21,27 @@
         <%    // Obtener la lista completa de tiendas desde la sesión
             List<tienda> lista = (List<tienda>) session.getAttribute("tiendas");
         %>
-        <h1 class="col-sm-6 col-md-5 p-4 mx-auto d-flex justify-content-center align-items-center">Tiendas</h1>
-        <div class="container col-sm-6 col-md-5 p-4 mx-auto d-flex justify-content-center align-items-center">
-            <div class="cards">
-                <div class="card red">
-                    <p class="tip"><%= lista.get(0).getNombre()%></p>
-                    <p class="second-text"><a href="comprar.jsp?id=0" style="text-decoration: none;color: white;">IR A LA TIENDA</a></p>
-                </div>
-                <div class="card blue">
-                    <p class="tip"><%= lista.get(1).getNombre()%></p>
-                    <p class="second-text"><a href="comprar.jsp?id=1" style="text-decoration: none;color: white;">IR A LA TIENDA</a></p>
-                </div>
-                <div class="card green">
-                    <p class="tip"><%= lista.get(2).getNombre()%></p>
-                    <p class="second-text"><a href="comprar.jsp?id=2" style="text-decoration: none;color: white;">IR A LA TIENDA</a></p>
+        <div class="wrapper" style="display: flex; flex-direction: column; min-height: 100vh;">
+            <div class="main" style="flex: 1">
+                <h1 class="col-sm-6 col-md-5 p-4 mx-auto d-flex justify-content-center align-items-center">Tiendas</h1>
+                <div class="container col-sm-6 col-md-5 p-4 mx-auto d-flex justify-content-center align-items-center">
+                    <div class="cards">
+                        <div class="card red">
+                            <p class="tip"><%= lista.get(0).getNombre()%></p>
+                            <p class="second-text"><a href="comprar.jsp?id=0" style="text-decoration: none;color: white;">IR A LA TIENDA</a></p>
+                        </div>
+                        <div class="card blue">
+                            <p class="tip"><%= lista.get(1).getNombre()%></p>
+                            <p class="second-text"><a href="comprar.jsp?id=1" style="text-decoration: none;color: white;">IR A LA TIENDA</a></p>
+                        </div>
+                        <div class="card green">
+                            <p class="tip"><%= lista.get(2).getNombre()%></p>
+                            <p class="second-text"><a href="comprar.jsp?id=2" style="text-decoration: none;color: white;">IR A LA TIENDA</a></p>
+                        </div>
+                    </div>
                 </div>
             </div>
+            <%@ include file="footer.jsp" %>
         </div>
-        <%@ include file="footer.jsp" %>
     </body>
 </html>

@@ -24,10 +24,8 @@
             response.setHeader("Expires", "0");
         %>
         <div class="container d-flex justify-content-center align-items-center">
-            <img src="img/Login.png" alt="logo"/>
+            <img src="img/Login.png" class="img-fluid" alt="logo"/>
         </div>
-<!--        <h1>Hello World!</h1>
-        <a href="usuarios">Ir al sitio</a>-->
         <%@ include file="footer.jsp" %>
     </body>
 </html>

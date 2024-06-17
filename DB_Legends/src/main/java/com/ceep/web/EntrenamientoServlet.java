@@ -5,6 +5,7 @@
 package com.ceep.web;
 
 import com.ceep.dominio.item;
+import com.ceep.dominio.personaje;
 import com.ceep.dominio.usuario;
 import com.ceep.service.IItemService;
 import com.ceep.service.IUsuarioService;
@@ -26,8 +27,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author joseb
  */
-@WebServlet(name = "ComprarServlet", urlPatterns = {"/comprar"})
-public class ComprarServlet extends HttpServlet {
+@WebServlet(name = "EntrenamientoServlet", urlPatterns = {"/entrenamiento"})
+public class EntrenamientoServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,41 +40,54 @@ public class ComprarServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Inject
-    IItemService itemService;
-    @Inject
     IUsuarioService usuarioService;
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ClassNotFoundException, CloneNotSupportedException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, ClassNotFoundException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession();
         usuario user = (usuario) session.getAttribute("user");
-        int index = Integer.parseInt(request.getParameter("id"));//DS,CC,PC
-        int id = Integer.parseInt(request.getParameter("idItem"));//Obj entrenamiento
+        int index = Integer.parseInt(request.getParameter("id"));//Obj entrenamiento
+        int id = Integer.parseInt(request.getParameter("idpj"));//Id pj
         byte[] misItems = (byte[]) session.getAttribute("misItems");
-        List<item> items = itemService.listar_items();
-        List<item> ds = (List<item>) user.deserializar_items(misItems);
-        boolean encontrado = false;
-        int i;
-        if (ds.get(index).getCantidad() >= 5) {
-            ds.get(index).setCantidad(ds.get(index).getCantidad() - 5);
-            for (i = 0; i < ds.size(); i++) {
-                if (Objects.equals(ds.get(i).getIdItem(), items.get(id).getIdItem())) {
-                    encontrado = true;
+        byte[] misPjs = (byte[]) session.getAttribute("equipo");
+        List<personaje> pjs = (List<personaje>) user.deserializar_pjs(misPjs);
+        List<item> objetos = (List<item>) user.deserializar_items(misItems);
+        if (objetos.get(index).getCantidad() >= 1) {
+            objetos.get(index).setCantidad(objetos.get(index).getCantidad() - 1);
+            switch (index) {
+                case 5:
+                    pjs.get(id).setNivel(pjs.get(id).getNivel() + 1);
+                    pjs.get(id).setDanioFisico(pjs.get(id).getDanioFisico() + 10);
+                    pjs.get(id).setDanioEnergia(pjs.get(id).getDanioEnergia()+ 10);
+                    pjs.get(id).setDefensaFisico(pjs.get(id).getDefensaFisico() + 10);
+                    pjs.get(id).setDefensaEnergia(pjs.get(id).getDefensaEnergia()+ 10);
                     break;
-                }
+                case 4:
+                    pjs.get(id).setNivel(pjs.get(id).getNivel() + 3);
+                    pjs.get(id).setDanioFisico(pjs.get(id).getDanioFisico() + 40);
+                    pjs.get(id).setDanioEnergia(pjs.get(id).getDanioEnergia()+ 40);
+                    pjs.get(id).setDefensaFisico(pjs.get(id).getDefensaFisico() + 40);
+                    pjs.get(id).setDefensaEnergia(pjs.get(id).getDefensaEnergia()+ 40);
+                    break;
+                case 3:
+                    pjs.get(id).setNivel(pjs.get(id).getNivel() + 5);
+                    pjs.get(id).setDanioFisico(pjs.get(id).getDanioFisico() + 60);
+                    pjs.get(id).setDanioEnergia(pjs.get(id).getDanioEnergia()+ 60);
+                    pjs.get(id).setDefensaFisico(pjs.get(id).getDefensaFisico() + 60);
+                    pjs.get(id).setDefensaEnergia(pjs.get(id).getDefensaEnergia()+ 60);
+                    break;
+                default:
+                    break;
             }
-            if (encontrado) {
-                ds.get(i).setCantidad(ds.get(i).getCantidad() + 5);
-            } else {
-                item new_useitem = (item) items.get(id).clone();
-                ds.add(new_useitem);
-            }
-            byte[] actualizaDs = user.serializar_items(ds);
+            byte[] actualizaDs = user.serializar_items(objetos);
+            byte[] actualizaPjs = user.serializar_pjs(pjs);
             user.setListaItems(actualizaDs);
             session.setAttribute("misItems", actualizaDs);
+            user.setListaPersonajes(actualizaPjs);
+            session.setAttribute("equipo", actualizaPjs);
             session.setAttribute("user", user);
             usuarioService.actualizarUsuario(user);
-            response.sendRedirect("tienda.jsp");
+            response.sendRedirect("entrenar.jsp");
         } else {
             response.sendRedirect("index.jsp");
         }
@@ -93,8 +107,8 @@ public class ComprarServlet extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
-        } catch (ClassNotFoundException | CloneNotSupportedException ex) {
-            Logger.getLogger(ComprarServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(EntrenamientoServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -111,8 +125,8 @@ public class ComprarServlet extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
-        } catch (ClassNotFoundException | CloneNotSupportedException ex) {
-            Logger.getLogger(ComprarServlet.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(EntrenamientoServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
